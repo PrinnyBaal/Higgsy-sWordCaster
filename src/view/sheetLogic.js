@@ -1,13 +1,23 @@
 
 sheetProj.view.sheetLogic = {
   setupUserInterface: function () {
-      setAllIDs();
-      updateAll();
-      displayTabs();
-      createStatSheet();
-      createSkillSheet();
-      displayStats();
-      setClicks();
+      if (localStorage.getItem("effectWords") === null) {
+        effectPromise.then(resolve=>getStarted(),
+                           reject=>console.log(reject));
+      }
+      else{
+        getStarted();
+      }
+
+      function getStarted(){
+        console.log(JSON.parse(localStorage.getItem("effectWords"));
+      }
+      // updateAll();
+      // displayTabs();
+      // createStatSheet();
+      // createSkillSheet();
+      // displayStats();
+      // setClicks();
     }
 };
 

@@ -60,12 +60,25 @@ let data={
   }
 }
 
-loadWords();
+let effectPromise= new Promise((resolve, reject)=>{$.getJSON( "Paizo_effectWords.json", function(data) {
+      localStorage.setItem("effectWords", data);});
 
 function loadWords(){
-  $.getJSON( "test.json", function(data) {
+  var promise1 = new Promise(function(resolve, reject) {
+  setTimeout(function() {
+    resolve('foo');
+  }, 300);
+});
+  new Promise $.getJSON( "Paizo_effectWords.json", function(data) {
+  resolve(data);
+});
+  $.getJSON( "Paizo_effectWords.json", function(data) {
+  console.log(data);
+  });
+  $.getJSON( "Paizo_effectWords.json", function(data) {
   console.log(data);
 });
+
 }
 
 function resetStorage(){
