@@ -10,7 +10,7 @@ sheetProj.view.sheetLogic = {
       }
 
       function getStarted(){
-        console.log(JSON.parse(localStorage.getItem("effectWords"));
+        console.log(JSON.parse(localStorage.getItem("effectWords")));
       }
       // updateAll();
       // displayTabs();
