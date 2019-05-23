@@ -62,7 +62,8 @@ let data={
 
 let effectPromise= new Promise((resolve, reject)=>{
   $.getJSON("Paizo_effectWords.json", function(data) {
-      localStorage.setItem("effectWords", data)
+      console.log(data);
+      localStorage.setItem("effectWords", JSON.stringify(data))
     })
   }
 );
