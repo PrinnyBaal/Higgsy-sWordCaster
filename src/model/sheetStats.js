@@ -63,23 +63,23 @@ let data={
 let effectPromise= new Promise((resolve, reject)=>{$.getJSON( "Paizo_effectWords.json", function(data) {
       localStorage.setItem("effectWords", data);});
 
-function loadWords(){
-  var promise1 = new Promise(function(resolve, reject) {
-  setTimeout(function() {
-    resolve('foo');
-  }, 300);
-});
-  new Promise $.getJSON( "Paizo_effectWords.json", function(data) {
-  resolve(data);
-});
-  $.getJSON( "Paizo_effectWords.json", function(data) {
-  console.log(data);
-  });
-  $.getJSON( "Paizo_effectWords.json", function(data) {
-  console.log(data);
-});
-
-}
+// function loadWords(){
+//   var promise1 = new Promise(function(resolve, reject) {
+//   setTimeout(function() {
+//     resolve('foo');
+//   }, 300);
+// });
+//   new Promise $.getJSON( "Paizo_effectWords.json", function(data) {
+//   resolve(data);
+// });
+//   $.getJSON( "Paizo_effectWords.json", function(data) {
+//   console.log(data);
+//   });
+//   $.getJSON( "Paizo_effectWords.json", function(data) {
+//   console.log(data);
+// });
+//
+// }
 
 function resetStorage(){
   if (window.confirm("Do you really want to delete all your saved info?")) {
