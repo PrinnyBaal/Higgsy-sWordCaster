@@ -60,8 +60,8 @@ let data={
   }
 }
 
-let effectPromise= new Promise((resolve, reject)=>{$.getJSON( "Paizo_effectWords.json", function(data) {
-      localStorage.setItem("effectWords", data);});
+let effectPromise= new Promise((resolve, reject)=>{$.getJSON("Paizo_effectWords.json", function(data) {
+      localStorage.setItem("effectWords", data);})});
 
 // function loadWords(){
 //   var promise1 = new Promise(function(resolve, reject) {
