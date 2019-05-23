@@ -11,7 +11,7 @@ sheetProj.view.sheetLogic = {
 
       function getStarted(){
         let effectWords=JSON.parse(localStorage.getItem("effectWords"));
-        console.log(effectWord)
+        console.log(effectWords)
       }
       // updateAll();
       // displayTabs();
