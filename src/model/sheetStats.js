@@ -63,7 +63,7 @@ let data={
 loadWords();
 
 function loadWords(){
-  $.getJSON( "src/model/wordFiles/test.json", function(data) {
+  $.getJSON( "test.json", function(data) {
   console.log(data);
 });
 }
