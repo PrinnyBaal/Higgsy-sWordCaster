@@ -65,7 +65,7 @@ function EffectWord(props) {
   var metaOptions = [];
   var metaValues = Object.values(props.metaWords);
   metaValues.forEach(function (value) {
-    targetOptions.push(React.createElement(
+    metaOptions.push(React.createElement(
       "option",
       { value: value.Title },
       value.Title
@@ -150,7 +150,7 @@ var WordConstructor = function (_React$Component) {
         ),
         React.createElement(
           "div",
-          { "class": "row h-25", style: { overflow: auto } },
+          { "class": "row h-25", style: { overflow: "auto" } },
           React.createElement(
             "div",
             { id: "reactWordPanel", className: "col-12 wordContainer" },

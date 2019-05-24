@@ -9,7 +9,6 @@ function quickReact(){
 
 
 
-
 function TargetWord(props){
     let targetOptions=[];
     let targetValues=Object.values(props.targetWords);
@@ -34,7 +33,7 @@ function EffectWord(props){
   effectValues.forEach((value)=>{effectOptions.push(<option value={value.Title}>{value.Title}</option>)});
   let metaOptions=[];
   let metaValues=Object.values(props.metaWords);
-  metaValues.forEach((value)=>{targetOptions.push(<option value={value.Title}>{value.Title}</option>)});
+  metaValues.forEach((value)=>{metaOptions.push(<option value={value.Title}>{value.Title}</option>)});
 
   return(<div class="wordSlot">
           <select>
@@ -89,7 +88,7 @@ class WordConstructor extends React.Component {
             {this.renderContent()}
           </div>
         </div>
-        <div class="row h-25" style={{overflow:auto}}>
+        <div class="row h-25" style={{overflow:"auto"}}>
           <div id="reactWordPanel" className="col-12 wordContainer">
             {this.renderTargetWord()}
             {this.renderEffectWord(0)}
