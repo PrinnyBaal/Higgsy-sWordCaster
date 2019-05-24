@@ -72,7 +72,9 @@ class WordConstructor extends React.Component {
     };
   }
 
-
+  renderContent(){
+    return (<div>Hello</div>);
+  }
 
   renderTargetWord(){
     return <TargetWord targetWords={this.state.wordLibrary.targets} metaWords={this.state.wordLibrary.metas}/>
@@ -101,7 +103,6 @@ class WordConstructor extends React.Component {
           </div>
           </div>
       </div>
-
 
     );
   }

@@ -120,6 +120,15 @@ var WordConstructor = function (_React$Component) {
   }
 
   _createClass(WordConstructor, [{
+    key: "renderContent",
+    value: function renderContent() {
+      return React.createElement(
+        "div",
+        null,
+        "Hello"
+      );
+    }
+  }, {
     key: "renderTargetWord",
     value: function renderTargetWord() {
       return React.createElement(TargetWord, { targetWords: this.state.wordLibrary.targets, metaWords: this.state.wordLibrary.metas });
