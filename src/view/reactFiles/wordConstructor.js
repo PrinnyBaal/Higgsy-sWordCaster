@@ -7,11 +7,7 @@ function quickReact(){
     );
 }
 
-function Button(props){
 
-  return (<button className={props.buttonClasses} onClick={props.onClick}>
-          </button>);
-}
 
 
 function TargetWord(props){
@@ -86,16 +82,15 @@ class WordConstructor extends React.Component {
 
 
   render() {
-    let panelClasses=`panel ${this.state.raisedPanel ? "":"reducedPanel"}`;
     return (
       <div>
         <div className="row h-75">
-          <div className="col" style="border: 2px solid black; background-color:grey;">
+          <div className="col">
             {this.renderContent()}
           </div>
         </div>
-        <div class="row h-25" style="overflow:auto;">
-          <div id="reactWordPanel" className="col-12 wordContainer" style="border: 2px solid black;">
+        <div class="row h-25" style={{overflow:auto}}>
+          <div id="reactWordPanel" className="col-12 wordContainer">
             {this.renderTargetWord()}
             {this.renderEffectWord(0)}
             {this.renderEffectWord(1)}

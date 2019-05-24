@@ -14,11 +14,6 @@ function quickReact() {
     } }), document.getElementById('reactWordConstructor'));
 }
 
-function Button(props) {
-
-  return React.createElement("button", { className: props.buttonClasses, onClick: props.onClick });
-}
-
 function TargetWord(props) {
   var targetOptions = [];
   var targetValues = Object.values(props.targetWords);
@@ -141,7 +136,6 @@ var WordConstructor = function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      var panelClasses = "panel " + (this.state.raisedPanel ? "" : "reducedPanel");
       return React.createElement(
         "div",
         null,
@@ -150,16 +144,16 @@ var WordConstructor = function (_React$Component) {
           { className: "row h-75" },
           React.createElement(
             "div",
-            { className: "col", style: "border: 2px solid black; background-color:grey;" },
+            { className: "col" },
             this.renderContent()
           )
         ),
         React.createElement(
           "div",
-          { "class": "row h-25", style: "overflow:auto;" },
+          { "class": "row h-25", style: { overflow: auto } },
           React.createElement(
             "div",
-            { id: "reactWordPanel", className: "col-12 wordContainer", style: "border: 2px solid black;" },
+            { id: "reactWordPanel", className: "col-12 wordContainer" },
             this.renderTargetWord(),
             this.renderEffectWord(0),
             this.renderEffectWord(1),
