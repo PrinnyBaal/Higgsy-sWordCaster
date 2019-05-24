@@ -15,7 +15,7 @@ function TargetWord(props){
     targetValues.forEach((value)=>{targetOptions.push(<option value={value.Title}>{value.Title}</option>)});
     let metaOptions=[];
     let metaValues=Object.values(props.metaWords);
-    metaValues.forEach((value)=>{targetOptions.push(<option value={value.Title}>{value.Title}</option>)});
+    metaValues.forEach((value)=>{metaOptions.push(<option value={value.Title}>{value.Title}</option>)});
 
     return(<div class="wordSlot">
           <select>
@@ -35,14 +35,23 @@ function EffectWord(props){
   let metaValues=Object.values(props.metaWords);
   metaValues.forEach((value)=>{metaOptions.push(<option value={value.Title}>{value.Title}</option>)});
 
-  return(<div class="wordSlot">
-          <select>
-            {effectOptions}
-          </select><br/>
-          <select>
-            {metaOptions}
-          </select><br/>
-      </div>);
+  if (props.effectStats.active){
+    return(<div class="wordSlot">
+            <select>
+              {effectOptions}
+            </select><br/>
+            <select>
+              {metaOptions}
+            </select><br/>
+            <button onClick={props.onClick}>X</button>
+        </div>);
+  }
+  else{
+    return(<div class="wordSlot">
+            <button onClick={props.onClick}>+</button>
+        </div>);
+  }
+
 }
 
 
@@ -59,12 +68,24 @@ class WordConstructor extends React.Component {
         metas:JSON.parse(localStorage.getItem("metaWords")),
       },
       builtWord:{
-        targetWord:{},
-        effectWord1:{},
-        effectWord2:{},
-        effectWord3:{},
+        targetWord:{active:true},
+        effectWord1:{active:true},
+        effectWord2:{active:false},
+        effectWord3:{active:false},
       },
     };
+  }
+
+  toggleEffectStatus(i){
+    const builtWord= JSON.parse(JSON.stringify(this.state.builtWord));
+    let targetEffect=builtWord[`effectWord${i}`];
+    if (targetEffect.active){
+      target.effect=false;
+    }
+    else{
+      target.effect=true;
+    }
+    this.setState({builtWord:builtWord});
   }
 
   renderContent(){
@@ -76,7 +97,7 @@ class WordConstructor extends React.Component {
   }
 
   renderEffectWord(i){
-    return <EffectWord effectWords={this.state.wordLibrary.effects} metaWords={this.state.wordLibrary.metas}/>
+    return <EffectWord effectStats={this.state.builtWord[`effectWord${i}`]} onClick={() => this.toggleEffectStatus(i)} effectWords={this.state.wordLibrary.effects} metaWords={this.state.wordLibrary.metas}/>
   }
 
 
@@ -91,9 +112,9 @@ class WordConstructor extends React.Component {
         <div class="row h-25" style={{overflow:"auto"}}>
           <div id="reactWordPanel" className="col-12 wordContainer">
             {this.renderTargetWord()}
-            {this.renderEffectWord(0)}
             {this.renderEffectWord(1)}
             {this.renderEffectWord(2)}
+            {this.renderEffectWord(3)}
           </div>
           </div>
       </div>
