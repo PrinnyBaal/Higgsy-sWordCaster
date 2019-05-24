@@ -137,9 +137,9 @@ var WordConstructor = function (_React$Component) {
       var builtWord = JSON.parse(JSON.stringify(this.state.builtWord));
       var targetEffect = builtWord["effectWord" + i];
       if (targetEffect.active) {
-        target.effect = false;
+        targetEffect.active = false;
       } else {
-        target.effect = true;
+        targetEffect.active = true;
       }
       this.setState({ builtWord: builtWord });
     }

@@ -80,10 +80,9 @@ class WordConstructor extends React.Component {
     const builtWord= JSON.parse(JSON.stringify(this.state.builtWord));
     let targetEffect=builtWord[`effectWord${i}`];
     if (targetEffect.active){
-      target.effect=false;
-    }
-    else{
-      target.effect=true;
+      targetEffect.active=false;
+    }else{
+      targetEffect.active=true;
     }
     this.setState({builtWord:builtWord});
   }
