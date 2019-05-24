@@ -62,8 +62,24 @@ let data={
 
 let effectPromise= new Promise((resolve, reject)=>{
   $.getJSON("Paizo_effectWords.json", function(data) {
-      console.log(data);
+      
       localStorage.setItem("effectWords", JSON.stringify(data))
+    })
+  }
+);
+
+let targetPromise=new Promise((resolve, reject)=>{
+  $.getJSON("Paizo_targetWords.json", function(data) {
+
+      localStorage.setItem("targetWords", JSON.stringify(data))
+    })
+  }
+);
+
+let metaPromise=new Promise((resolve, reject)=>{
+  $.getJSON("Paizo_metaWords.json", function(data) {
+
+      localStorage.setItem("metaWords", JSON.stringify(data))
     })
   }
 );

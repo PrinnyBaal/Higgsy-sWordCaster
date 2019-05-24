@@ -1,9 +1,12 @@
 
 sheetProj.view.sheetLogic = {
   setupUserInterface: function () {
-      if (localStorage.getItem("effectWords") === null) {
-        effectPromise.then(resolve=>getStarted(),
-                           reject=>console.log(reject));
+      if (localStorage.getItem("effectWords") === null|localStorage.getItem("targetWords") === null|localStorage.getItem("metaWords") === null) {
+
+        Promise.all([effectPromise, targetPromise, metaPromise]).then(function(values) {
+          console.log(values);
+          getStarted();
+        });
       }
       else{
         getStarted();
@@ -11,7 +14,12 @@ sheetProj.view.sheetLogic = {
 
       function getStarted(){
         let effectWords=JSON.parse(localStorage.getItem("effectWords"));
-        console.log(effectWords)
+        let targetWords=JSON.parse(localStorage.getItem("targetWords"));
+        let metaWords=JSON.parse(localStorage.getItem("metaWords"));
+        console.log(effectWords);
+        console.log(targetWords);
+        console.log(metaWords);
+        quickReact();
       }
       // updateAll();
       // displayTabs();

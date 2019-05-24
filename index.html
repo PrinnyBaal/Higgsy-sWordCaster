@@ -8,8 +8,12 @@
   <link rel="stylesheet" type="text/css" href="Styling/sample.css">
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 
+  <script src="https://unpkg.com/react@16/umd/react.production.min.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@16/umd/react-dom.production.min.js" crossorigin></script>
+
   <script src="src/ctrl/initialize.js"></script>
   <script src="src/model/sheetStats.js"></script>
+  <script src="wordConstructor.js"></script>
   <script src="src/view/sheetLogic.js"></script>
 
   <script>
@@ -37,12 +41,15 @@
 
   </div>
 
-  <div class="container" style="border: 2px solid black; height:800px;">
+  <div id="reactWordContainer" class="container" style="border: 2px solid black; height:800px;">
     <div class="row h-75">
       <div class="col" style="border: 2px solid black; background-color:grey;"></div>
     </div>
     <div class="row h-25" style="overflow:auto;">
-      <div class="col-12 wordContainer" style="border: 2px solid black;">
+      <div id="reactWordPanel" class="col-12 wordContainer" style="border: 2px solid black;">
+
+      </div>
+      <!-- <div class="col-12 wordContainer" style="border: 2px solid black;">
         <div class="wordSlot">
           <input class="targetWord" type="text" placeholder="targetWord"></input><br>
           <input class="metaWord" type="text" placeholder="metaWord"></input>
@@ -56,7 +63,7 @@
           <input class="metaWord" type="text" placeholder="metaWord"></input>
         </div>
 
-      </div>
+      </div> -->
     </div>
 
   </div>
