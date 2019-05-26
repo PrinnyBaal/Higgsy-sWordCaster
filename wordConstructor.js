@@ -39,13 +39,13 @@ function TargetWord(props) {
     { "class": "wordSlot" },
     React.createElement(
       "select",
-      null,
+      { value: props.targetStats.word, onChange: props.onTargetChange },
       targetOptions
     ),
     React.createElement("br", null),
     React.createElement(
       "select",
-      null,
+      { value: props.targetStats.meta, onChange: props.onMetaChange },
       metaOptions
     ),
     React.createElement("br", null)
@@ -78,13 +78,13 @@ function EffectWord(props) {
       { "class": "wordSlot" },
       React.createElement(
         "select",
-        null,
+        { value: props.effectStats.word, onChange: props.onEffectChange },
         effectOptions
       ),
       React.createElement("br", null),
       React.createElement(
         "select",
-        null,
+        { value: props.effectStats.meta, onChange: props.onMetaChange },
         metaOptions
       ),
       React.createElement("br", null),
@@ -122,10 +122,10 @@ var WordConstructor = function (_React$Component) {
         metas: JSON.parse(localStorage.getItem("metaWords"))
       },
       builtWord: {
-        targetWord: { active: true },
-        effectWord1: { active: true },
-        effectWord2: { active: false },
-        effectWord3: { active: false }
+        targetWord: { active: true, word: null, meta: null, restrictions: [] },
+        effectWord1: { active: true, word: null, meta: null, restrictions: [] },
+        effectWord2: { active: false, word: null, meta: null, restrictions: [] },
+        effectWord3: { active: false, word: null, meta: null, restrictions: [] }
       }
     };
     return _this;
@@ -140,7 +140,48 @@ var WordConstructor = function (_React$Component) {
         targetEffect.active = false;
       } else {
         targetEffect.active = true;
+        targetEffect.word = null;
+        targetEffect.meta = null;
+        targetEffect.restrictions = [];
       }
+      this.setState({ builtWord: builtWord });
+    }
+  }, {
+    key: "changeEffectWord",
+    value: function changeEffectWord(i) {
+      console.log(event);
+      var newEffect = event.target.value;
+      var builtWord = JSON.parse(JSON.stringify(this.state.builtWord));
+      var targetEffect = builtWord["effectWord" + i];
+      targetEffect.word = newEffect;
+
+      //figure out and set new restrictions
+
+      this.setState({ builtWord: builtWord });
+    }
+  }, {
+    key: "changeTargetWord",
+    value: function changeTargetWord() {
+      console.log(event);
+      var newTarget = event.target.value;
+      var builtWord = JSON.parse(JSON.stringify(this.state.builtWord));
+      var target = builtWord.targetWord;
+
+      target.word = newTarget;
+
+      //figure out and set new restrictions
+
+      this.setState({ builtWord: builtWord });
+    }
+  }, {
+    key: "changeMeta",
+    value: function changeMeta(i) {
+      console.log(event);
+      var newMeta = event.target.value;
+      var builtWord = JSON.parse(JSON.stringify(this.state.builtWord));
+      var target = i ? builtWord["effectWord" + i] : builtWord.targetWord;
+      target.meta = newMeta;
+      //figure out and set new restrictions???
       this.setState({ builtWord: builtWord });
     }
   }, {
@@ -155,16 +196,26 @@ var WordConstructor = function (_React$Component) {
   }, {
     key: "renderTargetWord",
     value: function renderTargetWord() {
-      return React.createElement(TargetWord, { targetWords: this.state.wordLibrary.targets, metaWords: this.state.wordLibrary.metas });
+      var _this2 = this;
+
+      return React.createElement(TargetWord, { targetStats: this.state.builtWord.targetWord, targetWords: this.state.wordLibrary.targets, metaWords: this.state.wordLibrary.metas, onTargetChange: function onTargetChange() {
+          return _this2.changeTargetWord();
+        }, onMetaChange: function onMetaChange() {
+          return _this2.changeMeta();
+        } });
     }
   }, {
     key: "renderEffectWord",
     value: function renderEffectWord(i) {
-      var _this2 = this;
+      var _this3 = this;
 
       return React.createElement(EffectWord, { effectStats: this.state.builtWord["effectWord" + i], onClick: function onClick() {
-          return _this2.toggleEffectStatus(i);
-        }, effectWords: this.state.wordLibrary.effects, metaWords: this.state.wordLibrary.metas });
+          return _this3.toggleEffectStatus(i);
+        }, effectWords: this.state.wordLibrary.effects, metaWords: this.state.wordLibrary.metas, onEffectChange: function onEffectChange() {
+          return _this3.changeEffectWord(i);
+        }, onMetaChange: function onMetaChange() {
+          return _this3.changeMeta(i);
+        } });
     }
   }, {
     key: "render",
