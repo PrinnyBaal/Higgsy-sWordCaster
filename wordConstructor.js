@@ -248,7 +248,7 @@ var WordConstructor = function (_React$Component) {
       function getCombinedEffectLevel() {
         //two and threeset tables loaded in at Sheetstats.js
         var effectiveLevel = 0;
-        switch (activeEffects.length) {
+        switch (activeEffectLevels.length) {
           case 1:
             effectiveLevel = activeEffectLevels[0];
             break;
@@ -262,7 +262,7 @@ var WordConstructor = function (_React$Component) {
             console.log("Wait whaat?  You're supposed to have 1-3 effect words not " + activeEffects.length);
             break;
         }
-
+        console.log(effectiveLevel);
         return effectiveLevel;
       }
 
