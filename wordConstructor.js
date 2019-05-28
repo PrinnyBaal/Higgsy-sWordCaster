@@ -191,7 +191,7 @@ var WordConstructor = function (_React$Component) {
       //Note lack of meta words and some other key stuff
       var wordLibrary = this.state.wordLibrary;
       var builtWord = this.state.builtWord;
-      var target = builtWord.targetWord;
+      var target = wordLibrary.targets[builtWord.targetWord.word];
       var effect1 = builtWord.effectWord1;
       var effect2 = builtWord.effectWord2;
       var effect3 = builtWord.effectWord3;
@@ -246,11 +246,12 @@ var WordConstructor = function (_React$Component) {
 
       effectList.forEach(function (effect) {
         if (effect.active) {
+          effect = wordLibrary.effects[effect.word];
           spellName += " " + effect.Title;
           //
-          school += effect.school;
+          school += effect.School;
           //
-          highestEffectLevel = highestEffectLevel < parseInt(effect.level.match(/\d/)) ? parseInt(effect.level.match(/\d/)) : highestEffectLevel;
+          highestEffectLevel = highestEffectLevel < parseInt(effect.Levels.match(/\d/)) ? parseInt(effect.Levels.match(/\d/)) : highestEffectLevel;
           //
           var cleanDuration = cleanEffectDuration(effect.Durations);
           console.log(cleanDuration);
