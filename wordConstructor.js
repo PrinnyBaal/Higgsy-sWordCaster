@@ -56,9 +56,10 @@ function EffectWord(props) {
   var effectOptions = [];
   var effectValues = Object.values(props.effectWords);
   effectValues.forEach(function (value) {
+
     effectOptions.push(React.createElement(
       "option",
-      { value: value.Title },
+      { disabled: testEffectValidity(value) ? false : true, value: value.Title },
       value.Title
     ));
   });
@@ -104,6 +105,36 @@ function EffectWord(props) {
         "+"
       )
     );
+  }
+
+  function testEffectValidity(testedEffect) {
+    //should test for both level validity and group validity, currrently only doing the former
+    var level = parseInt(testedEffect.Levels.match(/\d/));
+    var activeEffects = [props.builtWord.effectWord1, props.builtWord.effectWord2, props.builtWord.effectWord3];
+    activeEffects.filter(function (word) {
+      if (word.active && word.word) {
+        if (word.word == props.effectStats.word) {
+          return false;
+        } else {
+          return true;
+        }
+      } else {
+        return false;
+      }
+    });
+    var wordSize = activeEffect.length;
+
+    switch (wordSize) {
+      case 1:
+        return twoEffectTable[activeEffects[0]][level] !== undefined ? true : false;
+        break;
+      case 2:
+        return threeEffectTable[activeEffects[0]][activeEffects[1]][level] !== undefined ? true : false;
+        break;
+      default:
+        return true;
+        break;
+    }
   }
 }
 
@@ -478,7 +509,7 @@ var WordConstructor = function (_React$Component) {
     value: function renderEffectWord(i) {
       var _this3 = this;
 
-      return React.createElement(EffectWord, { effectStats: this.state.builtWord["effectWord" + i], onClick: function onClick() {
+      return React.createElement(EffectWord, { builtWord: this.state.builtWord, effectStats: this.state.builtWord["effectWord" + i], onClick: function onClick() {
           return _this3.toggleEffectStatus(i);
         }, effectWords: this.state.wordLibrary.effects, metaWords: this.state.wordLibrary.metas, onEffectChange: function onEffectChange() {
           return _this3.changeEffectWord(i);

@@ -30,7 +30,12 @@ function TargetWord(props){
 function EffectWord(props){
   let effectOptions=[];
   let effectValues=Object.values(props.effectWords);
-  effectValues.forEach((value)=>{effectOptions.push(<option value={value.Title}>{value.Title}</option>)});
+  effectValues.forEach((value)=>
+    {
+
+      effectOptions.push(<option disabled={testEffectValidity(value) ? false:true} value={value.Title}>{value.Title}</option>)
+    }
+  );
   let metaOptions=[];
   let metaValues=Object.values(props.metaWords);
   metaValues.forEach((value)=>{metaOptions.push(<option value={value.Title}>{value.Title}</option>)});
@@ -50,6 +55,38 @@ function EffectWord(props){
     return(<div class="wordSlot">
             <button onClick={props.onClick}>+</button>
         </div>);
+  }
+
+  function testEffectValidity(testedEffect){
+    //should test for both level validity and group validity, currrently only doing the former
+    let level=parseInt(testedEffect.Levels.match(/\d/));
+    let activeEffects=[props.builtWord.effectWord1, props.builtWord.effectWord2, props.builtWord.effectWord3];
+    activeEffects.filter((word)=>{
+      if(word.active && word.word){
+        if (word.word==props.effectStats.word){
+          return false;
+        }else{
+          return true;
+        }
+
+      }else{
+        return false
+      }
+    });
+    let wordSize=activeEffect.length;
+
+
+    switch(wordSize){
+      case 1:
+        return twoEffectTable[activeEffects[0]][level]!==undefined ? true:false;
+        break;
+      case 2:
+        return threeEffectTable[activeEffects[0]][activeEffects[1]][level]!==undefined ? true:false;
+        break;
+      default:
+        return true;
+        break;
+    }
   }
 
 }
@@ -298,7 +335,7 @@ class WordConstructor extends React.Component {
   }
 
   renderEffectWord(i){
-    return <EffectWord effectStats={this.state.builtWord[`effectWord${i}`]} onClick={() => this.toggleEffectStatus(i)} effectWords={this.state.wordLibrary.effects} metaWords={this.state.wordLibrary.metas} onEffectChange={() => this.changeEffectWord(i)} onMetaChange={() => this.changeMeta(i)}/>
+    return <EffectWord builtWord={this.state.builtWord} effectStats={this.state.builtWord[`effectWord${i}`]} onClick={() => this.toggleEffectStatus(i)} effectWords={this.state.wordLibrary.effects} metaWords={this.state.wordLibrary.metas} onEffectChange={() => this.changeEffectWord(i)} onMetaChange={() => this.changeMeta(i)}/>
   }
 
   render() {
