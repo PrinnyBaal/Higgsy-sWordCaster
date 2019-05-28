@@ -246,7 +246,10 @@ var WordConstructor = function (_React$Component) {
 
       effectList.forEach(function (effect) {
         if (effect.active) {
+          console.log(wordLibrary.effects);
+          console.log(effect.word);
           effect = wordLibrary.effects[effect.word];
+          console.log(effect);
           spellName += " " + effect.Title;
           //
           school += effect.School;
