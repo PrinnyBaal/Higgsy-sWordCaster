@@ -109,7 +109,7 @@ function EffectWord(props) {
   function testEffectValidity(testedEffect) {
     //should test for both level validity and group validity, currrently only doing the former
     var level = parseInt(testedEffect.Levels.match(/\d/));
-    var activeEffects = [props.builtWord.effectWord1, props.builtWord.effectWord2, props.builtWord.effectWord3];
+    var activeEffects = [props.effectWords[props.builtWord.effectWord1.word], props.effectWords[props.builtWord.effectWord2.word], props.effectWords[props.builtWord.effectWord3.word]];
     activeEffects.filter(function (word) {
       if (word.active && word.word) {
         if (word.word == props.effectStats.word) {
