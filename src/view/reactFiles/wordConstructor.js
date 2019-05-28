@@ -209,11 +209,11 @@ class WordConstructor extends React.Component {
         //
         if (highestEffectLevel<effect.Levels.match(/\d/) || savingThrow=="none"){
           if(!effect.SavingThrow.match(/none/)){
-            savingThrow=effect.savingThrow.match(/Will\s|Reflex\s|Fortitude\s/);
+            savingThrow=effect.SavingThrow.match(/Will\s|Reflex\s|Fortitude\s/);
           }
         }else if(highestEffectLevel==effect.Levels.match(/\d/)){
           if(!effect.SavingThrow.match(/none/)){
-            savingThrow+=`OR ${effect.savingThrow.match(/Will\s|Reflex\s|Fortitude\s/)} (Caster's Choice)`;
+            savingThrow+=`OR ${effect.SavingThrow.match(/Will\s|Reflex\s|Fortitude\s/)} (Caster's Choice)`;
           }
         }
         //
