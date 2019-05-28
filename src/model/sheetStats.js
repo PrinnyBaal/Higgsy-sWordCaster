@@ -62,7 +62,7 @@ let data={
 
 let effectPromise= new Promise((resolve, reject)=>{
   $.getJSON("Paizo_effectWords.json", function(data) {
-      
+
       localStorage.setItem("effectWords", JSON.stringify(data))
     })
   }
@@ -83,6 +83,136 @@ let metaPromise=new Promise((resolve, reject)=>{
     })
   }
 );
+
+let twoEffectTable={
+  0:{
+    0:2,
+    2:3
+    },
+  1:{
+    1:3,
+    3:4
+    },
+  2:{
+    0:2,
+    2:4,
+    4:5,
+    },
+  3:{
+    1:4,
+    3:5,
+    5:6
+    },
+  4:{
+    2:5,
+    4:6,
+    6:7
+    },
+  5:{
+    3:6,
+    5:7,
+    7:8
+    },
+  6:{
+    4:7,
+    6:8
+    },
+  7:{
+    5:8,
+    7:9
+    },
+  8:{
+    5:9
+    }
+};
+let threeEffectTable={
+  0:{
+    0:{
+      0:3,
+      2:4
+      },
+    2:{
+      0:4
+      }
+    },
+  1:{
+    1:{
+      3:5
+      },
+    3:{
+      1:5
+      }
+    },
+  2:{
+    0:{
+      0:4
+      },
+    2:{
+      2:5,
+      4:6
+      },
+    4:{
+      2:6
+      }
+    },
+  3:{
+    1:{
+      1:5
+      },
+    3:{
+      3:6,
+      5:7
+      },
+    5:{
+      3:7
+      }
+    },
+  4:{
+    2:{
+      2:6
+      },
+    4:{
+      4:7,
+      6:8
+      },
+    6:{
+      4:8
+      }
+    },
+  5:{
+    3:{
+      3:7
+      },
+    5:{
+      5:8,
+      7:9
+      },
+    7:{
+      5:9
+      }
+    },
+  6:{
+    4:{
+      4:8
+      },
+    6:{
+      6:9
+      }
+    },
+  7:{
+    5:{
+      5:9
+      },
+    }
+};
+
+// if (localStorage.getItem("twoEffectTable") === null) {
+//   localStorage.setItem('twoEffectTable', JSON.stringify(twoEffectTable));
+// }
+//
+// if (localStorage.getItem("threeEffectTable") === null) {
+//   localStorage.setItem('threeEffectTable', JSON.stringify(threeEffectTable));
+// }
 
 // function loadWords(){
 //   var promise1 = new Promise(function(resolve, reject) {

@@ -212,6 +212,7 @@ var WordConstructor = function (_React$Component) {
       var seeText = false;
       var highestEffectLevel = -1;
       var descriptions = [];
+      var activeEffectLevels = [];
 
       var durationRanking = {
         "instantaneous": 0,
@@ -244,8 +245,30 @@ var WordConstructor = function (_React$Component) {
         return polishedDuration;
       }
 
+      function getCombinedEffectLevel() {
+        //two and threeset tables loaded in at Sheetstats.js
+        var effectiveLevel = 0;
+        switch (activeEffects.length) {
+          case 1:
+            effectiveLevel = activeEffectLevels[0];
+            break;
+          case 2:
+            effectiveLevel = twoEffectTable[activeEffectLevels[0]][activeEffectLevels[1]];
+            break;
+          case 3:
+            effectiveLevel = twoEffectTable[activeEffectLevels[0]][activeEffectLevels[1]][activeEffectLevels[2]];
+            break;
+          default:
+            console.log("Wait whaat?  You're supposed to have 1-3 effect words not " + activeEffects.length);
+            break;
+        }
+
+        return effectiveLevel;
+      }
+
       effectList.forEach(function (effect) {
         if (effect.active && effect.word) {
+
           console.log(wordLibrary.effects);
           console.log(effect.word);
           effect = wordLibrary.effects[effect.word];
@@ -254,6 +277,7 @@ var WordConstructor = function (_React$Component) {
           //
           school += effect.School;
           //
+          activeEffectLevels.push(parseInt(effect.Levels.match(/\d/)));
           highestEffectLevel = highestEffectLevel < parseInt(effect.Levels.match(/\d/)) ? parseInt(effect.Levels.match(/\d/)) : highestEffectLevel;
           //
           var cleanDuration = cleanEffectDuration(effect.Durations);
@@ -283,6 +307,7 @@ var WordConstructor = function (_React$Component) {
           descriptions.push(effect.Description + (effect.Boosts == "null" ? "" : effect.Boosts));
         }
       });
+      level = level < getCombinedEffectLevel() ? getCombinedEffectLevel() : level;
 
       //School : A combination of all schools found in effect words
       //Level: The heighest level among EITHER the target word or the COMBINATION of Effect words (see table)// OR the highest level meta word (note that some meta words ALSO increase the level of what they alter)

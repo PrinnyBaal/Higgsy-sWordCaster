@@ -153,6 +153,7 @@ class WordConstructor extends React.Component {
     let seeText=false;
     let highestEffectLevel=-1;
     let descriptions=[];
+    let activeEffectLevels=[];
 
     let durationRanking={
       "instantaneous":0,
@@ -185,8 +186,30 @@ class WordConstructor extends React.Component {
       return polishedDuration;
     }
 
+    function getCombinedEffectLevel(){
+      //two and threeset tables loaded in at Sheetstats.js
+      let effectiveLevel=0;
+      switch(activeEffects.length){
+        case 1:
+          effectiveLevel=activeEffectLevels[0];
+          break;
+        case 2:
+          effectiveLevel=twoEffectTable[activeEffectLevels[0]][activeEffectLevels[1]];
+          break;
+        case 3:
+          effectiveLevel=twoEffectTable[activeEffectLevels[0]][activeEffectLevels[1]][activeEffectLevels[2]];
+          break;
+        default:
+          console.log(`Wait whaat?  You're supposed to have 1-3 effect words not ${activeEffects.length}`);
+          break;
+      }
+
+      return effectiveLevel;
+    }
+
     effectList.forEach((effect)=>{
       if (effect.active && effect.word){
+
         console.log(wordLibrary.effects);
         console.log(effect.word);
         effect=wordLibrary.effects[effect.word];
@@ -195,6 +218,7 @@ class WordConstructor extends React.Component {
         //
         school+=effect.School;
         //
+        activeEffectLevels.push(parseInt(effect.Levels.match(/\d/)));
         highestEffectLevel= highestEffectLevel<parseInt(effect.Levels.match(/\d/)) ? parseInt(effect.Levels.match(/\d/)):highestEffectLevel;
         //
         let cleanDuration=cleanEffectDuration(effect.Durations);
@@ -202,7 +226,7 @@ class WordConstructor extends React.Component {
         if(!duration){
           duration=cleanDuration;
         }else{
-          if (durationRanking[cleanDuration]!==undefined){  
+          if (durationRanking[cleanDuration]!==undefined){
             duration= durationRanking[duration]<durationRanking[cleanDuration] ? duration:cleanDuration;
           }
         }
@@ -224,7 +248,7 @@ class WordConstructor extends React.Component {
         descriptions.push(effect.Description+ (effect.Boosts=="null" ? "":effect.Boosts));
       }
     });
-
+    level = level<getCombinedEffectLevel() ? getCombinedEffectLevel():level;
 
 
     //School : A combination of all schools found in effect words
