@@ -56,7 +56,6 @@ function EffectWord(props) {
   var effectOptions = [];
   var effectValues = Object.values(props.effectWords);
   effectValues.forEach(function (value) {
-
     effectOptions.push(React.createElement(
       "option",
       { disabled: testEffectValidity(value) ? false : true, value: value.Title },
@@ -123,6 +122,8 @@ function EffectWord(props) {
       }
     });
     var wordSize = activeEffects.length;
+    console.log(activeEffects);
+    console.log(wordSize);
 
     switch (wordSize) {
       case 1:

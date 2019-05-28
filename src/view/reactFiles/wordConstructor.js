@@ -32,7 +32,6 @@ function EffectWord(props){
   let effectValues=Object.values(props.effectWords);
   effectValues.forEach((value)=>
     {
-
       effectOptions.push(<option disabled={testEffectValidity(value) ? false:true} value={value.Title}>{value.Title}</option>)
     }
   );
@@ -74,7 +73,8 @@ function EffectWord(props){
       }
     });
     let wordSize=activeEffects.length;
-
+    console.log(activeEffects);
+    console.log(wordSize);
 
     switch(wordSize){
       case 1:
