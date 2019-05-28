@@ -32,6 +32,9 @@ function EffectWord(props){
   let effectValues=Object.values(props.effectWords);
   effectValues.forEach((value)=>
     {
+      console.log("debug here ypu little bitch");
+      console.log(value);
+      console.log(testEffectValidity(value));
       effectOptions.push(<option disabled={testEffectValidity(value) ? false:true} value={value.Title}>{value.Title}</option>)
     }
   );

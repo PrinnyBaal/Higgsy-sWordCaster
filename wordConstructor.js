@@ -56,6 +56,9 @@ function EffectWord(props) {
   var effectOptions = [];
   var effectValues = Object.values(props.effectWords);
   effectValues.forEach(function (value) {
+    console.log("debug here ypu little bitch");
+    console.log(value);
+    console.log(testEffectValidity(value));
     effectOptions.push(React.createElement(
       "option",
       { disabled: testEffectValidity(value) ? false : true, value: value.Title },
