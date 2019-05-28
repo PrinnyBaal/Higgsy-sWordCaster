@@ -160,7 +160,7 @@ class WordConstructor extends React.Component {
       "1d4 rounds":2,
       "1 round/level":3,
       "1 minute/level":4,
-      "10 minute/level":5,
+      "10 minutes/level":5,
       "1 hour/level":6,
       "1 day/level":7,
     }
@@ -202,7 +202,7 @@ class WordConstructor extends React.Component {
         if(!duration){
           duration=cleanDuration;
         }else{
-          if (durationRanking[cleanDuration].length){
+          if (durationRanking[cleanDuration]!==undefined){  
             duration= durationRanking[duration]<durationRanking[cleanDuration] ? duration:cleanDuration;
           }
         }
