@@ -73,7 +73,7 @@ function EffectWord(props){
         return false
       }
     });
-    let wordSize=activeEffect.length;
+    let wordSize=activeEffects.length;
 
 
     switch(wordSize){

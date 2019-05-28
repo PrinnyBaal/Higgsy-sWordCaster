@@ -122,7 +122,7 @@ function EffectWord(props) {
         return false;
       }
     });
-    var wordSize = activeEffect.length;
+    var wordSize = activeEffects.length;
 
     switch (wordSize) {
       case 1:
