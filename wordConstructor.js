@@ -109,7 +109,8 @@ function EffectWord(props) {
   function testEffectValidity(testedEffect) {
     //should test for both level validity and group validity, currrently only doing the former
     var level = parseInt(testedEffect.Levels.match(/\d/));
-    var activeEffects = [props.effectWords[props.builtWord.effectWord1.word], props.effectWords[props.builtWord.effectWord2.word], props.effectWords[props.builtWord.effectWord3.word]];
+    var activeEffects = [props.builtWord.effectWord1, props.builtWord.effectWord2, props.builtWord.effectWord3];
+    var activeEffectLevels = [];
     activeEffects.filter(function (word) {
       if (word.active && word.word) {
         if (word.word == props.effectStats.word) {
@@ -122,15 +123,17 @@ function EffectWord(props) {
       }
     });
     var wordSize = activeEffects.length;
-    console.log(activeEffects);
-    console.log(wordSize);
+    activeEffects.forEach(function (ae) {
+      activeEffectLevels.push(parseInt(props.effectWords[ae.word].Levels.match(/\d/)));
+    });
 
     switch (wordSize) {
       case 1:
-        return twoEffectTable[activeEffects[0]][level] !== undefined ? true : false;
+
+        return twoEffectTable[activeEffectLevels[0].word][level] === undefined ? false : true;
         break;
       case 2:
-        return threeEffectTable[activeEffects[0]][activeEffects[1]][level] !== undefined ? true : false;
+        return threeEffectTable[activeEffectLevels[0]][activeEffectLevels[1]][level] === undefined ? false : true;
         break;
       default:
         return true;
