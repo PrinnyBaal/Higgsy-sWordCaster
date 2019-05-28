@@ -74,17 +74,14 @@ function EffectWord(props){
       }
     });
     let wordSize=activeEffects.length;
-    activeEffects.forEach((ae)=>{
-      activeEffectLevels.push(parseInt(props.effectWords[ae.word].Levels.match(/\d/)));
-    });
+
 
     switch(wordSize){
       case 1:
-
-        return twoEffectTable[activeEffectLevels[0].word][level]===undefined ? false:true;
+        return twoEffectTable[parseInt(activeEffects[0].effectStats.Levels.match(/\d/))][level]===undefined ? false:true;
         break;
       case 2:
-        return threeEffectTable[activeEffectLevels[0]][activeEffectLevels[1]][level]===undefined ? false:true;
+        return threeEffectTable[parseInt(activeEffects[0].effectStats.Levels.match(/\d/))][parseInt(activeEffects[0].effectStats.Levels.match(/\d/))][level]===undefined ? false:true;
         break;
       default:
         return true;
@@ -109,9 +106,9 @@ class WordConstructor extends React.Component {
       },
       builtWord:{
         targetWord:{active:true, word:"Personal", meta:null, restrictions:[]},
-        effectWord1:{active:true, word:"Acid Burn ", meta:null, restrictions:[]},
-        effectWord2:{active:false, word:null, meta:null, restrictions:[]},
-        effectWord3:{active:false, word:null, meta:null, restrictions:[]},
+        effectWord1:{active:false, word:null, meta:null, restrictions:[], effectStats:null},
+        effectWord2:{active:false, word:null, meta:null, restrictions:[], effectStats:null},
+        effectWord3:{active:false, word:null, meta:null, restrictions:[], effectStats:null},
       },
     };
   }
@@ -131,11 +128,11 @@ class WordConstructor extends React.Component {
   }
 
   changeEffectWord(i){
-    console.log(event);
     let newEffect=event.target.value;
     const builtWord= JSON.parse(JSON.stringify(this.state.builtWord));
     let targetEffect=builtWord[`effectWord${i}`];
     targetEffect.word=newEffect;
+    targetEffect.effectStats=JSON.parse(JSON.stringify(this.state.wordLibrary.effects[newEffect]));
 
     //figure out and set new restrictions
 

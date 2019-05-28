@@ -123,17 +123,13 @@ function EffectWord(props) {
       }
     });
     var wordSize = activeEffects.length;
-    activeEffects.forEach(function (ae) {
-      activeEffectLevels.push(parseInt(props.effectWords[ae.word].Levels.match(/\d/)));
-    });
 
     switch (wordSize) {
       case 1:
-
-        return twoEffectTable[activeEffectLevels[0].word][level] === undefined ? false : true;
+        return twoEffectTable[parseInt(activeEffects[0].effectStats.Levels.match(/\d/))][level] === undefined ? false : true;
         break;
       case 2:
-        return threeEffectTable[activeEffectLevels[0]][activeEffectLevels[1]][level] === undefined ? false : true;
+        return threeEffectTable[parseInt(activeEffects[0].effectStats.Levels.match(/\d/))][parseInt(activeEffects[0].effectStats.Levels.match(/\d/))][level] === undefined ? false : true;
         break;
       default:
         return true;
@@ -158,9 +154,9 @@ var WordConstructor = function (_React$Component) {
       },
       builtWord: {
         targetWord: { active: true, word: "Personal", meta: null, restrictions: [] },
-        effectWord1: { active: true, word: "Acid Burn ", meta: null, restrictions: [] },
-        effectWord2: { active: false, word: null, meta: null, restrictions: [] },
-        effectWord3: { active: false, word: null, meta: null, restrictions: [] }
+        effectWord1: { active: false, word: null, meta: null, restrictions: [], effectStats: null },
+        effectWord2: { active: false, word: null, meta: null, restrictions: [], effectStats: null },
+        effectWord3: { active: false, word: null, meta: null, restrictions: [], effectStats: null }
       }
     };
     return _this;
@@ -184,11 +180,11 @@ var WordConstructor = function (_React$Component) {
   }, {
     key: "changeEffectWord",
     value: function changeEffectWord(i) {
-      console.log(event);
       var newEffect = event.target.value;
       var builtWord = JSON.parse(JSON.stringify(this.state.builtWord));
       var targetEffect = builtWord["effectWord" + i];
       targetEffect.word = newEffect;
+      targetEffect.effectStats = JSON.parse(JSON.stringify(this.state.wordLibrary.effects[newEffect]));
 
       //figure out and set new restrictions
 
