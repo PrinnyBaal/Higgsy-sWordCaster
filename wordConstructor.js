@@ -123,7 +123,7 @@ var WordConstructor = function (_React$Component) {
       },
       builtWord: {
         targetWord: { active: true, word: "Personal", meta: null, restrictions: [] },
-        effectWord1: { active: true, word: null, meta: null, restrictions: [] },
+        effectWord1: { active: true, word: "Acid Burn ", meta: null, restrictions: [] },
         effectWord2: { active: false, word: null, meta: null, restrictions: [] },
         effectWord3: { active: false, word: null, meta: null, restrictions: [] }
       }
