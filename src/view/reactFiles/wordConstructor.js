@@ -144,7 +144,7 @@ class WordConstructor extends React.Component {
     let castingTime=`Standard Action`;
     let components="Material/Verbal/Somatic";
     let range=target.Range;
-    let targets=target.Description;
+    let targets=target.Description+(target.Boosts=="null" ? "":target.Boosts);
     let duration=``;
     let savingThrow=`none`;
     let spellResist=`No`;
@@ -152,7 +152,7 @@ class WordConstructor extends React.Component {
     let concentration=false;
     let seeText=false;
     let highestEffectLevel=-1;
-    let descriptions=[target.Description+target.Boosts];
+    let descriptions=[];
 
     let durationRanking={
       "instantaneous":0,
@@ -243,24 +243,29 @@ class WordConstructor extends React.Component {
     function forgeDescription(){
       let finalDescript=``;
       descriptions.forEach((description)=>{
-        finalDescript+=description;
+        finalDescript+=`\n\ndescription`;
       });
       return finalDescript;
     }
     return (<div>
-              <div className="wordSpellName">Spell Name: {spellName}</div>
+              <div className="spellName"><b>Spell Name: </b>{spellName}</div>
+              <div className="basicSpellInfo"><span className="school"><b>School: </b>{school}</span><span className="level"><b>Level: </b>{level}</span></div>
              <hr/>
-              <div className="school"><b>School: </b>{school}</div>
-              <div className="level"><b>Level: </b>{level}</div>
+             CASTING
+             <hr/>
               <div className="castingTime"><b>Casting Time: </b>{castingTime}</div>
               <div className="components"><b>Components: </b>{components}</div>
-             <hr/>
+            <hr/>
+            EFFECT
+            <hr/>
               <div className="range"><b>Range: </b>{range}</div>
               <div className="targets"><b>Targets: </b>{targets}</div>
               <div className="duration"><b>Duration: </b>{duration}</div>
-              <div className="savingThrow"><b>Saving Throw: </b>{savingThrow}</div> //saveDC added here
-              <div className="spellResist"><b>Spell Resist: </b>{spellResist}</div>
-              <div className="description"><b>Description: </b>{forgeDescription()}</div>// Damage noted here?
+              <div className="defense"><span className="savingThrow"><b>Saving Throw: </b>{savingThrow}</span><span className="spellResist"> <b>Spell Resist: </b>{spellResist}</span></div>
+            <hr/>
+            DESCRIPTION
+            <hr/>
+              <div className="description"><b>Description: </b>{forgeDescription()}</div>
             </div>);
   }
 

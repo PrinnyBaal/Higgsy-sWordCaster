@@ -203,7 +203,7 @@ var WordConstructor = function (_React$Component) {
       var castingTime = "Standard Action";
       var components = "Material/Verbal/Somatic";
       var range = target.Range;
-      var targets = target.Description;
+      var targets = target.Description + (target.Boosts == "null" ? "" : target.Boosts);
       var duration = "";
       var savingThrow = "none";
       var spellResist = "No";
@@ -211,7 +211,7 @@ var WordConstructor = function (_React$Component) {
       var concentration = false;
       var seeText = false;
       var highestEffectLevel = -1;
-      var descriptions = [target.Description + target.Boosts];
+      var descriptions = [];
 
       var durationRanking = {
         "instantaneous": 0,
@@ -300,7 +300,7 @@ var WordConstructor = function (_React$Component) {
       function forgeDescription() {
         var finalDescript = "";
         descriptions.forEach(function (description) {
-          finalDescript += description;
+          finalDescript += "\n\ndescription";
         });
         return finalDescript;
       }
@@ -309,31 +309,41 @@ var WordConstructor = function (_React$Component) {
         null,
         React.createElement(
           "div",
-          { className: "wordSpellName" },
-          "Spell Name: ",
+          { className: "spellName" },
+          React.createElement(
+            "b",
+            null,
+            "Spell Name: "
+          ),
           spellName
         ),
+        React.createElement(
+          "div",
+          { className: "basicSpellInfo" },
+          React.createElement(
+            "span",
+            { className: "school" },
+            React.createElement(
+              "b",
+              null,
+              "School: "
+            ),
+            school
+          ),
+          React.createElement(
+            "span",
+            { className: "level" },
+            React.createElement(
+              "b",
+              null,
+              "Level: "
+            ),
+            level
+          )
+        ),
         React.createElement("hr", null),
-        React.createElement(
-          "div",
-          { className: "school" },
-          React.createElement(
-            "b",
-            null,
-            "School: "
-          ),
-          school
-        ),
-        React.createElement(
-          "div",
-          { className: "level" },
-          React.createElement(
-            "b",
-            null,
-            "Level: "
-          ),
-          level
-        ),
+        "CASTING",
+        React.createElement("hr", null),
         React.createElement(
           "div",
           { className: "castingTime" },
@@ -354,6 +364,8 @@ var WordConstructor = function (_React$Component) {
           ),
           components
         ),
+        React.createElement("hr", null),
+        "EFFECT",
         React.createElement("hr", null),
         React.createElement(
           "div",
@@ -387,25 +399,32 @@ var WordConstructor = function (_React$Component) {
         ),
         React.createElement(
           "div",
-          { className: "savingThrow" },
+          { className: "defense" },
           React.createElement(
-            "b",
-            null,
-            "Saving Throw: "
+            "span",
+            { className: "savingThrow" },
+            React.createElement(
+              "b",
+              null,
+              "Saving Throw: "
+            ),
+            savingThrow
           ),
-          savingThrow
-        ),
-        " //saveDC added here",
-        React.createElement(
-          "div",
-          { className: "spellResist" },
           React.createElement(
-            "b",
-            null,
-            "Spell Resist: "
-          ),
-          spellResist
+            "span",
+            { className: "spellResist" },
+            " ",
+            React.createElement(
+              "b",
+              null,
+              "Spell Resist: "
+            ),
+            spellResist
+          )
         ),
+        React.createElement("hr", null),
+        "DESCRIPTION",
+        React.createElement("hr", null),
         React.createElement(
           "div",
           { className: "description" },
@@ -415,8 +434,7 @@ var WordConstructor = function (_React$Component) {
             "Description: "
           ),
           forgeDescription()
-        ),
-        "// Damage noted here?"
+        )
       );
     }
   }, {
