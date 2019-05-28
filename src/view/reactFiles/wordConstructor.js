@@ -68,7 +68,7 @@ class WordConstructor extends React.Component {
         metas:JSON.parse(localStorage.getItem("metaWords")),
       },
       builtWord:{
-        targetWord:{active:true, word:null, meta:null, restrictions:[]},
+        targetWord:{active:true, word:"Personal", meta:null, restrictions:[]},
         effectWord1:{active:true, word:null, meta:null, restrictions:[]},
         effectWord2:{active:false, word:null, meta:null, restrictions:[]},
         effectWord3:{active:false, word:null, meta:null, restrictions:[]},
