@@ -142,7 +142,7 @@ class WordConstructor extends React.Component {
     let school=``;
     let level=target.Level;
     let castingTime=`Standard Action`;
-    let components="<b>M</b>aterial/<b>V</b>erbal/<b>S</b>omatic";
+    let components="\<b\>M\<\/b\>aterial/\<b\>V\<\/b\>erbal/\<b\>S\<\/b\>omatic";
     let range=target.Range;
     let targets=target.Description;
     let duration=``;
@@ -248,19 +248,19 @@ class WordConstructor extends React.Component {
       return finalDescript;
     }
     return (<div>
-              <div className="wordSpellName">{spellName}</div>
+              <div className="wordSpellName">Spell Name: {spellName}</div>
              <hr/>
-              <div className="school">{school}</div>
-              <div className="level">{level}</div>
-              <div className="castingTime">{castingTime}</div>
-              <div className="components">{components}</div>
+              <div className="school"><b>School: </b>{school}</div>
+              <div className="level"><b>Level: </b>{level}</div>
+              <div className="castingTime"><b>Casting Time: </b>{castingTime}</div>
+              <div className="components"><b>Components: </b>{components}</div>
              <hr/>
-              <div className="range">{range}</div>
-              <div className="targets">{targets}</div>
-              <div className="duration">{duration}</div>
-              <div className="savingThrow">{savingThrow}</div> //saveDC added here
-              <div className="spellResist">{spellResist}</div>
-              <div className="description">{forgeDescription()}</div>// Damage noted here?
+              <div className="range"><b>Range: </b>{range}</div>
+              <div className="targets"><b>Targets: </b>{targets}</div>
+              <div className="duration"><b>Duration: </b>{duration}</div>
+              <div className="savingThrow"><b>Saving Throw: </b>{savingThrow}</div> //saveDC added here
+              <div className="spellResist"><b>Spell Resist: </b>{spellResist}</div>
+              <div className="description"><b>Description: </b>{forgeDescription()}</div>// Damage noted here?
             </div>);
   }
 

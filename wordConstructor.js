@@ -201,7 +201,7 @@ var WordConstructor = function (_React$Component) {
       var school = "";
       var level = target.Level;
       var castingTime = "Standard Action";
-      var components = "<b>M</b>aterial/<b>V</b>erbal/<b>S</b>omatic";
+      var components = "\<b\>M\<\/b\>aterial/\<b\>V\<\/b\>erbal/\<b\>S\<\/b\>omatic";
       var range = target.Range;
       var targets = target.Description;
       var duration = "";
@@ -310,59 +310,110 @@ var WordConstructor = function (_React$Component) {
         React.createElement(
           "div",
           { className: "wordSpellName" },
+          "Spell Name: ",
           spellName
         ),
         React.createElement("hr", null),
         React.createElement(
           "div",
           { className: "school" },
+          React.createElement(
+            "b",
+            null,
+            "School: "
+          ),
           school
         ),
         React.createElement(
           "div",
           { className: "level" },
+          React.createElement(
+            "b",
+            null,
+            "Level: "
+          ),
           level
         ),
         React.createElement(
           "div",
           { className: "castingTime" },
+          React.createElement(
+            "b",
+            null,
+            "Casting Time: "
+          ),
           castingTime
         ),
         React.createElement(
           "div",
           { className: "components" },
+          React.createElement(
+            "b",
+            null,
+            "Components: "
+          ),
           components
         ),
         React.createElement("hr", null),
         React.createElement(
           "div",
           { className: "range" },
+          React.createElement(
+            "b",
+            null,
+            "Range: "
+          ),
           range
         ),
         React.createElement(
           "div",
           { className: "targets" },
+          React.createElement(
+            "b",
+            null,
+            "Targets: "
+          ),
           targets
         ),
         React.createElement(
           "div",
           { className: "duration" },
+          React.createElement(
+            "b",
+            null,
+            "Duration: "
+          ),
           duration
         ),
         React.createElement(
           "div",
           { className: "savingThrow" },
+          React.createElement(
+            "b",
+            null,
+            "Saving Throw: "
+          ),
           savingThrow
         ),
         " //saveDC added here",
         React.createElement(
           "div",
           { className: "spellResist" },
+          React.createElement(
+            "b",
+            null,
+            "Spell Resist: "
+          ),
           spellResist
         ),
         React.createElement(
           "div",
           { className: "description" },
+          React.createElement(
+            "b",
+            null,
+            "Description: "
+          ),
           forgeDescription()
         ),
         "// Damage noted here?"
