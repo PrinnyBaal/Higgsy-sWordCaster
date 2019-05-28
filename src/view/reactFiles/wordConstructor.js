@@ -128,7 +128,136 @@ class WordConstructor extends React.Component {
 
 
   renderContent(){
-    return (<div>Hello</div>);
+    //HEARTH
+    //Note lack of meta words and some other key stuff
+    let wordLibrary=this.state.wordLibrary;
+    let builtWord=this.state.builtWord;
+    let target=builtWord.targetWord;
+    let effect1=builtWord.effectWord1;
+    let effect2=builtWord.effectWord2;
+    let effect3=builtWord.effectWord3;
+    let effectList=[effect1, effect2, effect3];
+
+    let spellName=target.Title;
+    let school=``;
+    let level=target.Level;
+    let castingTime=`Standard Action`;
+    let components="<b>M</b>aterial/<b>V</b>erbal/<b>S</b>omatic";
+    let range=target.Range;
+    let targets=target.Description;
+    let duration=``;
+    let savingThrow=`none`;
+    let spellResist=`No`;
+    let onSaveDescriptions=[];
+    let concentration=false;
+    let seeText=false;
+    let highestEffectLevel=-1;
+    let descriptions=[target.Description+target.Boosts];
+
+    let durationRanking={
+      "instantaneous":0,
+      "1 round":1,
+      "1d4 rounds":2,
+      "1 round/level":3,
+      "1 minute/level":4,
+      "10 minute/level":5,
+      "1 hour/level":6,
+      "1 day/level":7,
+    }
+
+    function cleanEffectDuration(rawDuration){
+      let polishedDuration=rawDuration;
+      //do things with regexes to clean up rawDuration
+      //remove dismissable tag
+      polishedDuration=polishedDuration.replace(/\(D\)/, '');
+      // if has the concentration tag set concentration to true then toss out concentration text
+      if (polishedDuration.match("concentration")){
+        polishedDuration=polishedDuration.replace(/concentration/, '');
+        polishedDuration=polishedDuration.replace(/, up to/, '');
+        concentration=true;
+      }
+      //if has the varies tag set seeText to true then toss out everything
+      if (polishedDuration.match("varies")){
+        polishedDuration="";
+        seeText=true;
+      }
+      //strip trailing white text
+      return polishedDuration;
+    }
+
+    effectList.forEach((effect)=>{
+      if (effect.active){
+        spellName+=` ${effect.Title}`;
+        //
+        school+=effect.school;
+        //
+        highestEffectLevel= highestEffectLevel<parseInt(effect.level.match(/\d/)) ? parseInt(effect.level.match(/\d/)):highestEffectLevel;
+        //
+        let cleanDuration=cleanEffectDuration(effect.Durations);
+        console.log(cleanDuration);
+        if(!duration){
+          duration=cleanDuration;
+        }else{
+          if (durationRanking[cleanDuration].length){
+            duration= durationRanking[duration]<durationRanking[cleanDuration] ? duration:cleanDuration;
+          }
+        }
+        //
+        if (highestEffectLevel<effect.Levels.match(/\d/) || savingThrow=="none"){
+          if(!effect.SavingThrow.match(/none/)){
+            savingThrow=effect.savingThrow.match(/Will\s|Reflex\s|Fortitude\s/);
+          }
+        }else if(highestEffectLevel==effect.Levels.match(/\d/)){
+          if(!effect.SavingThrow.match(/none/)){
+            savingThrow+=`OR ${effect.savingThrow.match(/Will\s|Reflex\s|Fortitude\s/)} (Caster's Choice)`;
+          }
+        }
+        //
+        if(effect.SpellResist.match(/yes/)){
+          spellResist="Yes";
+        }
+        //
+        descriptions.push(effect.Description+ effect.Boosts=="null" ? "":effect.Boosts);
+      }
+    });
+
+
+
+    //School : A combination of all schools found in effect words
+    //Level: The heighest level among EITHER the target word or the COMBINATION of Effect words (see table)// OR the highest level meta word (note that some meta words ALSO increase the level of what they alter)
+    //Casting Time: Always seems to be a standard action?
+    //Components: Material||Divine Focus/Verbal/Somatic/
+    //Range: Determined by target word
+    //Targets:  Determined by target word
+    //Duration: determined by effect word, in a combination takes the shortest
+    // Saving Throw: Save type determined by highest level effect word that allows a save.  Different effect words have different consequences if the victim passes their save.
+    //Save DC: Based on level of wordspell
+    //Spell Resistance:  All or nothing, if ANY effect word allows SR the entire spell allows SR
+    //Description: A cobble of all the effect descriptions OR a cobble of all the on-save effect descriptions.  Just put both side by side.
+    //Damage: Is it a combo word?  If so damage is limited by dice equal to caster level.
+
+    function forgeDescription(){
+      let finalDescript=``;
+      descriptions.forEach((description)=>{
+        finalDescript+=description;
+      });
+      return finalDescript;
+    }
+    return (<div>
+              <div className="wordSpellName">{spellName}</div>
+             <hr/>
+              <div className="school">{school}</div>
+              <div className="level">{level}</div>
+              <div className="castingTime">{castingTime}</div>
+              <div className="components">{components}</div>
+             <hr/>
+              <div className="range">{range}</div>
+              <div className="targets">{targets}</div>
+              <div className="duration">{duration}</div>
+              <div className="savingThrow">{savingThrow}</div> //saveDC added here
+              <div className="spellResist">{spellResist}</div>
+              <div className="description">{forgeDescription()}</div>// Damage noted here?
+            </div>);
   }
 
   renderTargetWord(){
@@ -138,7 +267,6 @@ class WordConstructor extends React.Component {
   renderEffectWord(i){
     return <EffectWord effectStats={this.state.builtWord[`effectWord${i}`]} onClick={() => this.toggleEffectStatus(i)} effectWords={this.state.wordLibrary.effects} metaWords={this.state.wordLibrary.metas} onEffectChange={() => this.changeEffectWord(i)} onMetaChange={() => this.changeMeta(i)}/>
   }
-
 
   render() {
     return (

@@ -1,14 +1,16 @@
 
 sheetProj.view.sheetLogic = {
   setupUserInterface: function () {
-      if (localStorage.getItem("effectWords") === null|localStorage.getItem("targetWords") === null|localStorage.getItem("metaWords") === null) {
-
+      if (localStorage.getItem("effectWords") === null || localStorage.getItem("targetWords") === null || localStorage.getItem("metaWords") === null) {
+          console.log("launching promises to get all words loaded in...");
         Promise.all([effectPromise, targetPromise, metaPromise]).then(function(values) {
           console.log(values);
+          console.log("get it started for the first time!");
           getStarted();
         });
       }
       else{
+        console.log("words already loaded so lets just get into it!");
         getStarted();
       }
 

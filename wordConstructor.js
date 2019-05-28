@@ -187,10 +187,181 @@ var WordConstructor = function (_React$Component) {
   }, {
     key: "renderContent",
     value: function renderContent() {
+      //HEARTH
+      //Note lack of meta words and some other key stuff
+      var wordLibrary = this.state.wordLibrary;
+      var builtWord = this.state.builtWord;
+      var target = builtWord.targetWord;
+      var effect1 = builtWord.effectWord1;
+      var effect2 = builtWord.effectWord2;
+      var effect3 = builtWord.effectWord3;
+      var effectList = [effect1, effect2, effect3];
+
+      var spellName = target.Title;
+      var school = "";
+      var level = target.Level;
+      var castingTime = "Standard Action";
+      var components = "<b>M</b>aterial/<b>V</b>erbal/<b>S</b>omatic";
+      var range = target.Range;
+      var targets = target.Description;
+      var duration = "";
+      var savingThrow = "none";
+      var spellResist = "No";
+      var onSaveDescriptions = [];
+      var concentration = false;
+      var seeText = false;
+      var highestEffectLevel = -1;
+      var descriptions = [target.Description + target.Boosts];
+
+      var durationRanking = {
+        "instantaneous": 0,
+        "1 round": 1,
+        "1d4 rounds": 2,
+        "1 round/level": 3,
+        "1 minute/level": 4,
+        "10 minute/level": 5,
+        "1 hour/level": 6,
+        "1 day/level": 7
+      };
+
+      function cleanEffectDuration(rawDuration) {
+        var polishedDuration = rawDuration;
+        //do things with regexes to clean up rawDuration
+        //remove dismissable tag
+        polishedDuration = polishedDuration.replace(/\(D\)/, '');
+        // if has the concentration tag set concentration to true then toss out concentration text
+        if (polishedDuration.match("concentration")) {
+          polishedDuration = polishedDuration.replace(/concentration/, '');
+          polishedDuration = polishedDuration.replace(/, up to/, '');
+          concentration = true;
+        }
+        //if has the varies tag set seeText to true then toss out everything
+        if (polishedDuration.match("varies")) {
+          polishedDuration = "";
+          seeText = true;
+        }
+        //strip trailing white text
+        return polishedDuration;
+      }
+
+      effectList.forEach(function (effect) {
+        if (effect.active) {
+          spellName += " " + effect.Title;
+          //
+          school += effect.school;
+          //
+          highestEffectLevel = highestEffectLevel < parseInt(effect.level.match(/\d/)) ? parseInt(effect.level.match(/\d/)) : highestEffectLevel;
+          //
+          var cleanDuration = cleanEffectDuration(effect.Durations);
+          console.log(cleanDuration);
+          if (!duration) {
+            duration = cleanDuration;
+          } else {
+            if (durationRanking[cleanDuration].length) {
+              duration = durationRanking[duration] < durationRanking[cleanDuration] ? duration : cleanDuration;
+            }
+          }
+          //
+          if (highestEffectLevel < effect.Levels.match(/\d/) || savingThrow == "none") {
+            if (!effect.SavingThrow.match(/none/)) {
+              savingThrow = effect.savingThrow.match(/Will\s|Reflex\s|Fortitude\s/);
+            }
+          } else if (highestEffectLevel == effect.Levels.match(/\d/)) {
+            if (!effect.SavingThrow.match(/none/)) {
+              savingThrow += "OR " + effect.savingThrow.match(/Will\s|Reflex\s|Fortitude\s/) + " (Caster's Choice)";
+            }
+          }
+          //
+          if (effect.SpellResist.match(/yes/)) {
+            spellResist = "Yes";
+          }
+          //
+          descriptions.push(effect.Description + effect.Boosts == "null" ? "" : effect.Boosts);
+        }
+      });
+
+      //School : A combination of all schools found in effect words
+      //Level: The heighest level among EITHER the target word or the COMBINATION of Effect words (see table)// OR the highest level meta word (note that some meta words ALSO increase the level of what they alter)
+      //Casting Time: Always seems to be a standard action?
+      //Components: Material||Divine Focus/Verbal/Somatic/
+      //Range: Determined by target word
+      //Targets:  Determined by target word
+      //Duration: determined by effect word, in a combination takes the shortest
+      // Saving Throw: Save type determined by highest level effect word that allows a save.  Different effect words have different consequences if the victim passes their save.
+      //Save DC: Based on level of wordspell
+      //Spell Resistance:  All or nothing, if ANY effect word allows SR the entire spell allows SR
+      //Description: A cobble of all the effect descriptions OR a cobble of all the on-save effect descriptions.  Just put both side by side.
+      //Damage: Is it a combo word?  If so damage is limited by dice equal to caster level.
+
+      function forgeDescription() {
+        var finalDescript = "";
+        descriptions.forEach(function (description) {
+          finalDescript += description;
+        });
+        return finalDescript;
+      }
       return React.createElement(
         "div",
         null,
-        "Hello"
+        React.createElement(
+          "div",
+          { className: "wordSpellName" },
+          spellName
+        ),
+        React.createElement("hr", null),
+        React.createElement(
+          "div",
+          { className: "school" },
+          school
+        ),
+        React.createElement(
+          "div",
+          { className: "level" },
+          level
+        ),
+        React.createElement(
+          "div",
+          { className: "castingTime" },
+          castingTime
+        ),
+        React.createElement(
+          "div",
+          { className: "components" },
+          components
+        ),
+        React.createElement("hr", null),
+        React.createElement(
+          "div",
+          { className: "range" },
+          range
+        ),
+        React.createElement(
+          "div",
+          { className: "targets" },
+          targets
+        ),
+        React.createElement(
+          "div",
+          { className: "duration" },
+          duration
+        ),
+        React.createElement(
+          "div",
+          { className: "savingThrow" },
+          savingThrow
+        ),
+        " //saveDC added here",
+        React.createElement(
+          "div",
+          { className: "spellResist" },
+          spellResist
+        ),
+        React.createElement(
+          "div",
+          { className: "description" },
+          forgeDescription()
+        ),
+        "// Damage noted here?"
       );
     }
   }, {
