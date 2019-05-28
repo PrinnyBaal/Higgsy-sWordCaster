@@ -110,7 +110,6 @@ function EffectWord(props) {
     //should test for both level validity and group validity, currrently only doing the former
     var level = parseInt(testedEffect.Levels.match(/\d/));
     var activeEffects = [props.builtWord.effectWord1, props.builtWord.effectWord2, props.builtWord.effectWord3];
-    var activeEffectLevels = [];
     activeEffects.filter(function (word) {
       if (word.active && word.word) {
         if (word.word == props.effectStats.word) {
@@ -280,6 +279,8 @@ var WordConstructor = function (_React$Component) {
         //two and threeset tables loaded in at Sheetstats.js
         var effectiveLevel = 0;
         switch (activeEffectLevels.length) {
+          case 0:
+            break;
           case 1:
             effectiveLevel = activeEffectLevels[0];
             break;
@@ -290,7 +291,7 @@ var WordConstructor = function (_React$Component) {
             effectiveLevel = twoEffectTable[activeEffectLevels[0]][activeEffectLevels[1]][activeEffectLevels[2]];
             break;
           default:
-            console.log("Wait whaat?  You're supposed to have 1-3 effect words not " + activeEffects.length);
+            console.log("Wait whaat?  You're supposed to have 1-3 effect words not " + activeEffectLevels.length);
             break;
         }
         console.log(effectiveLevel);
