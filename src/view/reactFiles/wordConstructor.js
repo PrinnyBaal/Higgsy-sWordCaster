@@ -142,7 +142,7 @@ class WordConstructor extends React.Component {
     let school=``;
     let level=target.Level;
     let castingTime=`Standard Action`;
-    let components="\<b\>M\<\/b\>aterial/\<b\>V\<\/b\>erbal/\<b\>S\<\/b\>omatic";
+    let components="Material/Verbal/Somatic";
     let range=target.Range;
     let targets=target.Description;
     let duration=``;
@@ -186,7 +186,7 @@ class WordConstructor extends React.Component {
     }
 
     effectList.forEach((effect)=>{
-      if (effect.active){
+      if (effect.active && effect.word){
         console.log(wordLibrary.effects);
         console.log(effect.word);
         effect=wordLibrary.effects[effect.word];
@@ -221,7 +221,7 @@ class WordConstructor extends React.Component {
           spellResist="Yes";
         }
         //
-        descriptions.push(effect.Description+ effect.Boosts=="null" ? "":effect.Boosts);
+        descriptions.push(effect.Description+ (effect.Boosts=="null" ? "":effect.Boosts));
       }
     });
 
