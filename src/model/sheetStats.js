@@ -8,6 +8,8 @@
 //   localStorage.setItem('activeChar', 0);
 // }
 
+console.log("hitting sheetStats?");
+
 let construct={
   targetWord:function(request){
     //request is an object containing anything that must be something other than default
