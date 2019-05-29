@@ -78,14 +78,14 @@ function EffectWord(props) {
       React.createElement(
         "select",
         { value: props.effectStats.word, onChange: props.onEffectChange },
-        forgeEffectOutgroups(effectValues, "level")
+        forgeEffectOptgroups(effectValues, "level")
       ),
       React.createElement("br", null),
       React.createElement(
         "select",
         { value: props.effectStats.meta, onChange: props.onMetaChange },
         React.createElement(
-          "outgroup",
+          "optgroup",
           { label: "testMyDude" },
           metaOptions
         )
@@ -140,18 +140,18 @@ function EffectWord(props) {
     }
   }
 
-  function forgeEffectOutgroups(values, outgroupType) {
-    var effectOutgroups = [];
+  function forgeEffectOptgroups(values, optgroupType) {
+    var effectOptgroups = [];
     var finalArray = [];
-    switch (outgroupType) {
+    switch (optgroupType) {
       case "level":
-        effectOutgroups = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
-        effectOutgroups.forEach(function (outgroupLvl) {
-          var outgroupEffects = [];
+        effectOptgroups = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+        effectOptgroups.forEach(function (optgroupLvl) {
+          var optgroupEffects = [];
           values.forEach(function (effect) {
             var effectLvl = effect.Levels.match(/\d/);
-            if (effectLvl == outgroupLvl) {
-              outgroupEffects.push(React.createElement(
+            if (effectLvl == optgroupLvl) {
+              optgroupEffects.push(React.createElement(
                 "option",
                 { disabled: testEffectValidity(effect) ? false : true, value: effect.Title },
                 effect.Title
@@ -159,15 +159,15 @@ function EffectWord(props) {
             }
           });
           finalArray.push(React.createElement(
-            "outgroup",
-            { label: outgroupLvl },
-            outgroupEffects
+            "optgroup",
+            { label: optgroupLvl },
+            optgroupEffects
           ));
         });
         return finalArray;
         break;
       default:
-        console.log("Illegal outgroup type?");
+        console.log("Illegal optgroup type?");
         return "";
         break;
     }

@@ -45,12 +45,12 @@ function EffectWord(props){
   if (props.effectStats.active){
     return(<div class="wordSlot">
             <select value={props.effectStats.word} onChange={props.onEffectChange}>
-              {forgeEffectOutgroups(effectValues, "level")}
+              {forgeEffectOptgroups(effectValues, "level")}
             </select><br/>
             <select value={props.effectStats.meta} onChange={props.onMetaChange}>
-              <outgroup label="testMyDude">
+              <optgroup label="testMyDude">
                 {metaOptions}
-              </outgroup>
+              </optgroup>
             </select><br/>
             <button onClick={props.onClick}>X</button>
         </div>);
@@ -93,26 +93,26 @@ function EffectWord(props){
     }
   }
 
-  function forgeEffectOutgroups(values, outgroupType){
-    let effectOutgroups=[];
+  function forgeEffectOptgroups(values, optgroupType){
+    let effectOptgroups=[];
     let finalArray=[];
-    switch(outgroupType){
+    switch(optgroupType){
       case "level":
-      effectOutgroups=[0,1,2,3,4,5,6,7,8,9];
-      effectOutgroups.forEach((outgroupLvl)=>{
-        let outgroupEffects=[];
+      effectOptgroups=[0,1,2,3,4,5,6,7,8,9];
+      effectOptgroups.forEach((optgroupLvl)=>{
+        let optgroupEffects=[];
         values.forEach((effect)=>{
           let effectLvl=effect.Levels.match(/\d/);
-          if (effectLvl==outgroupLvl){
-            outgroupEffects.push(<option disabled={testEffectValidity(effect) ? false:true} value={effect.Title}>{effect.Title}</option>);
+          if (effectLvl==optgroupLvl){
+            optgroupEffects.push(<option disabled={testEffectValidity(effect) ? false:true} value={effect.Title}>{effect.Title}</option>);
           }
         });
-        finalArray.push(<outgroup label={outgroupLvl}>{outgroupEffects}</outgroup>);
+        finalArray.push(<optgroup label={optgroupLvl}>{optgroupEffects}</optgroup>);
       });
       return finalArray;
       break;
       default:
-      console.log("Illegal outgroup type?");
+      console.log("Illegal optgroup type?");
       return "";
       break;
     }
