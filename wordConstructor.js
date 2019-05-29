@@ -56,9 +56,6 @@ function EffectWord(props) {
   var effectOptions = [];
   var effectValues = Object.values(props.effectWords);
   effectValues.forEach(function (value) {
-    console.log("debug here ypu little bitch");
-    console.log(value);
-    console.log(testEffectValidity(value));
     effectOptions.push(React.createElement(
       "option",
       { disabled: testEffectValidity(value) ? false : true, value: value.Title },
@@ -113,7 +110,7 @@ function EffectWord(props) {
     //should test for both level validity and group validity, currrently only doing the former
     var level = parseInt(testedEffect.Levels.match(/\d/));
     var activeEffects = [props.builtWord.effectWord1, props.builtWord.effectWord2, props.builtWord.effectWord3];
-    activeEffects.filter(function (word) {
+    activeEffects = activeEffects.filter(function (word) {
       if (word.active && word.word) {
         if (word.word == props.effectStats.word) {
           return false;
