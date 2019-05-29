@@ -55,13 +55,12 @@ function TargetWord(props) {
 function EffectWord(props) {
   var effectOptions = [];
   var effectValues = Object.values(props.effectWords);
-  effectValues.forEach(function (value) {
-    effectOptions.push(React.createElement(
-      "option",
-      { disabled: testEffectValidity(value) ? false : true, value: value.Title },
-      value.Title
-    ));
-  });
+  // effectValues.forEach((value)=>
+  //   {
+  //     effectOptions.push(<option disabled={testEffectValidity(value) ? false:true} value={value.Title}>{value.Title}</option>)
+  //   }
+  // );
+  //
   var metaOptions = [];
   var metaValues = Object.values(props.metaWords);
   metaValues.forEach(function (value) {
@@ -79,7 +78,7 @@ function EffectWord(props) {
       React.createElement(
         "select",
         { value: props.effectStats.word, onChange: props.onEffectChange },
-        effectOptions
+        forgeEffectOutgroups(effectValues, "level")
       ),
       React.createElement("br", null),
       React.createElement(
@@ -133,6 +132,39 @@ function EffectWord(props) {
         break;
       default:
         return true;
+        break;
+    }
+  }
+
+  function forgeEffectOutgroups(values, outgroupType) {
+    var effectOutgroups = [];
+    var finalArray = [];
+    switch (outgroupType) {
+      case "level":
+        effectOutgroups = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+        effectOutgroups.forEach(function (outgroupLvl) {
+          var outgroupEffects = [];
+          values.forEach(function (effect) {
+            var effectLvl = effect.Levels.match(/\d/);
+            if (effectLvl == outgroupLvl) {
+              outgroupEffects.push(React.createElement(
+                "option",
+                { disabled: testEffectValidity(effect) ? false : true, value: effect.Title },
+                effect.Title
+              ));
+            }
+          });
+          finalArray.push(React.createElement(
+            "outgroup",
+            { label: outgroupLvl },
+            outgroupEffects
+          ));
+        });
+        return finalArray;
+        break;
+      default:
+        console.log("Illegal outgroup type?");
+        return "";
         break;
     }
   }
@@ -356,9 +388,15 @@ var WordConstructor = function (_React$Component) {
       //Damage: Is it a combo word?  If so damage is limited by dice equal to caster level.
 
       function forgeDescription() {
-        var finalDescript = "";
+        var finalDescript = [];
         descriptions.forEach(function (description) {
-          finalDescript += "\n\ndescription";
+          finalDescript.push(React.createElement(
+            "div",
+            null,
+            description,
+            React.createElement("br", null),
+            React.createElement("br", null)
+          ));
         });
         return finalDescript;
       }

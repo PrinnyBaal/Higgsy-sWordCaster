@@ -27,14 +27,17 @@ function TargetWord(props){
     </div>);
 }
 
+
+
 function EffectWord(props){
   let effectOptions=[];
   let effectValues=Object.values(props.effectWords);
-  effectValues.forEach((value)=>
-    {
-      effectOptions.push(<option disabled={testEffectValidity(value) ? false:true} value={value.Title}>{value.Title}</option>)
-    }
-  );
+  // effectValues.forEach((value)=>
+  //   {
+  //     effectOptions.push(<option disabled={testEffectValidity(value) ? false:true} value={value.Title}>{value.Title}</option>)
+  //   }
+  // );
+  //
   let metaOptions=[];
   let metaValues=Object.values(props.metaWords);
   metaValues.forEach((value)=>{metaOptions.push(<option value={value.Title}>{value.Title}</option>)});
@@ -42,7 +45,7 @@ function EffectWord(props){
   if (props.effectStats.active){
     return(<div class="wordSlot">
             <select value={props.effectStats.word} onChange={props.onEffectChange}>
-              {effectOptions}
+              {forgeEffectOutgroups(effectValues, "level")}
             </select><br/>
             <select value={props.effectStats.meta} onChange={props.onMetaChange}>
               {metaOptions}
@@ -85,6 +88,31 @@ function EffectWord(props){
       default:
         return true;
         break;
+    }
+  }
+
+  function forgeEffectOutgroups(values, outgroupType){
+    let effectOutgroups=[];
+    let finalArray=[];
+    switch(outgroupType){
+      case "level":
+      effectOutgroups=[0,1,2,3,4,5,6,7,8,9];
+      effectOutgroups.forEach((outgroupLvl)=>{
+        let outgroupEffects=[];
+        values.forEach((effect)=>{
+          let effectLvl=effect.Levels.match(/\d/);
+          if (effectLvl==outgroupLvl){
+            outgroupEffects.push(<option disabled={testEffectValidity(effect) ? false:true} value={effect.Title}>{effect.Title}</option>);
+          }
+        });
+        finalArray.push(<outgroup label={outgroupLvl}>{outgroupEffects}</outgroup>);
+      });
+      return finalArray;
+      break;
+      default:
+      console.log("Illegal outgroup type?");
+      return "";
+      break;
     }
   }
 
@@ -303,9 +331,9 @@ class WordConstructor extends React.Component {
     //Damage: Is it a combo word?  If so damage is limited by dice equal to caster level.
 
     function forgeDescription(){
-      let finalDescript=``;
+      let finalDescript=[];
       descriptions.forEach((description)=>{
-        finalDescript+=`\n\ndescription`;
+        finalDescript.push(<div>{description}<br/><br/></div>);
       });
       return finalDescript;
     }
