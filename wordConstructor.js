@@ -125,6 +125,7 @@ function EffectWord(props) {
       }
     });
     var wordSize = activeEffects.length;
+    console.log(wordSize);
 
     switch (wordSize) {
       case 1:

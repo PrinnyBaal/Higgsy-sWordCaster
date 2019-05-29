@@ -76,7 +76,7 @@ function EffectWord(props){
       }
     });
     let wordSize=activeEffects.length;
-
+    console.log(wordSize);
 
     switch(wordSize){
       case 1:
