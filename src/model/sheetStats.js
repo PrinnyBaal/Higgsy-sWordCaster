@@ -8,7 +8,7 @@
 //   localStorage.setItem('activeChar', 0);
 // }
 
-console.log("hitting sheetStats?");
+
 
 let construct={
   targetWord:function(request){
@@ -208,7 +208,7 @@ let threeEffectTable={
       },
     },
   8:{},
-  9{}
+  9:{}
 };
 
 // if (localStorage.getItem("twoEffectTable") === null) {
