@@ -28,7 +28,6 @@ function TargetWord(props){
 }
 
 
-
 function EffectWord(props){
   let effectOptions=[];
   let effectValues=Object.values(props.effectWords);
@@ -48,9 +47,9 @@ function EffectWord(props){
               {forgeEffectOptgroups(effectValues, "level")}
             </select><br/>
             <select value={props.effectStats.meta} onChange={props.onMetaChange}>
-              <optgroup label="testMyDude">
-                {metaOptions}
-              </optgroup>
+
+              {metaOptions}
+
             </select><br/>
             <button onClick={props.onClick}>X</button>
         </div>);
@@ -65,6 +64,8 @@ function EffectWord(props){
     //should test for both level validity and group validity, currrently only doing the former
     let level=parseInt(testedEffect.Levels.match(/\d/));
     let activeEffects=[props.builtWord.effectWord1, props.builtWord.effectWord2, props.builtWord.effectWord3];
+    let invalidName=false;
+    let invalidGroup=false;
     activeEffects=activeEffects.filter((word)=>{
       if(word.active && word.word){
         if (word.word==props.effectStats.word){
@@ -78,8 +79,28 @@ function EffectWord(props){
       }
     });
     let wordSize=activeEffects.length;
-    console.log(wordSize);
 
+
+    activeEffects.forEach((effect)=>{
+      if (effect.word==testedEffect.Title){
+        invalidName=true;
+      }
+      if (effectStats.WordGroup=="Detection"){
+        if(testedEffect.WordGroup!="Detection"){
+          invalidGroup=true;
+        }
+      }else if(effect.effectStats.WordGroup==testedEffect.WordGroup){
+        invalidGroup=true;
+      }
+
+
+    });
+
+    //test for name validity
+    if (invalidName){return false}
+    //test for group validity
+    if (invalidGroup){return false}
+    //test for level validity
     switch(wordSize){
       case 1:
         return twoEffectTable[parseInt(activeEffects[0].effectStats.Levels.match(/\d/))][level]===undefined ? false:true;
@@ -107,7 +128,7 @@ function EffectWord(props){
             optgroupEffects.push(<option disabled={testEffectValidity(effect) ? false:true} value={effect.Title}>{effect.Title}</option>);
           }
         });
-        finalArray.push(<optgroup label={optgroupLvl}>{optgroupEffects}</optgroup>);
+        finalArray.push(<optgroup label={"Level: "+optgroupLvl}>{optgroupEffects}</optgroup>);
       });
       return finalArray;
       break;
@@ -282,7 +303,7 @@ class WordConstructor extends React.Component {
         console.log(effect.word);
         effect=wordLibrary.effects[effect.word];
         console.log(effect);
-        spellName+=` ${effect.Title}`;
+        spellName+=`--[${effect.Title}]--`;
         //
         school+=effect.School;
         //
@@ -304,8 +325,8 @@ class WordConstructor extends React.Component {
             savingThrow=effect.SavingThrow.match(/Will\s|Reflex\s|Fortitude\s/);
           }
         }else if(highestEffectLevel==effect.Levels.match(/\d/)){
-          if(!effect.SavingThrow.match(/none/)){
-            savingThrow+=`OR ${effect.SavingThrow.match(/Will\s|Reflex\s|Fortitude\s/)} (Caster's Choice)`;
+          if(!effect.SavingThrow.match(/none/) && !savingThrow.match(effect.SavingThrow.match(/Will\s|Reflex\s|Fortitude\s/))){
+            savingThrow+=`OR ${effect.SavingThrow.match(/Will\s|Reflex\s|Fortitude\s/)}`;
           }
         }
         //
@@ -316,6 +337,7 @@ class WordConstructor extends React.Component {
         descriptions.push(effect.Description+ (effect.Boosts=="null" ? "":effect.Boosts));
       }
     });
+    if(savingThrow.match(/OR/)){savingThrow+=" (Caster's Choice)"}
     level = level<getCombinedEffectLevel() ? getCombinedEffectLevel():level;
 
 

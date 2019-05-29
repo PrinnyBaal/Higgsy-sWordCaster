@@ -84,11 +84,7 @@ function EffectWord(props) {
       React.createElement(
         "select",
         { value: props.effectStats.meta, onChange: props.onMetaChange },
-        React.createElement(
-          "optgroup",
-          { label: "testMyDude" },
-          metaOptions
-        )
+        metaOptions
       ),
       React.createElement("br", null),
       React.createElement(
@@ -113,6 +109,8 @@ function EffectWord(props) {
     //should test for both level validity and group validity, currrently only doing the former
     var level = parseInt(testedEffect.Levels.match(/\d/));
     var activeEffects = [props.builtWord.effectWord1, props.builtWord.effectWord2, props.builtWord.effectWord3];
+    var invalidName = false;
+    var invalidGroup = false;
     activeEffects = activeEffects.filter(function (word) {
       if (word.active && word.word) {
         if (word.word == props.effectStats.word) {
@@ -125,8 +123,29 @@ function EffectWord(props) {
       }
     });
     var wordSize = activeEffects.length;
-    console.log(wordSize);
 
+    activeEffects.forEach(function (effect) {
+      if (effect.word == testedEffect.Title) {
+        invalidName = true;
+      }
+      if (effectStats.WordGroup == "Detection") {
+        if (testedEffect.WordGroup != "Detection") {
+          invalidGroup = true;
+        }
+      } else if (effect.effectStats.WordGroup == testedEffect.WordGroup) {
+        invalidGroup = true;
+      }
+    });
+
+    //test for name validity
+    if (invalidName) {
+      return false;
+    }
+    //test for group validity
+    if (invalidGroup) {
+      return false;
+    }
+    //test for level validity
     switch (wordSize) {
       case 1:
         return twoEffectTable[parseInt(activeEffects[0].effectStats.Levels.match(/\d/))][level] === undefined ? false : true;
@@ -160,7 +179,7 @@ function EffectWord(props) {
           });
           finalArray.push(React.createElement(
             "optgroup",
-            { label: optgroupLvl },
+            { label: "Level: " + optgroupLvl },
             optgroupEffects
           ));
         });
@@ -342,7 +361,7 @@ var WordConstructor = function (_React$Component) {
           console.log(effect.word);
           effect = wordLibrary.effects[effect.word];
           console.log(effect);
-          spellName += " " + effect.Title;
+          spellName += "--[" + effect.Title + "]--";
           //
           school += effect.School;
           //
@@ -364,8 +383,8 @@ var WordConstructor = function (_React$Component) {
               savingThrow = effect.SavingThrow.match(/Will\s|Reflex\s|Fortitude\s/);
             }
           } else if (highestEffectLevel == effect.Levels.match(/\d/)) {
-            if (!effect.SavingThrow.match(/none/)) {
-              savingThrow += "OR " + effect.SavingThrow.match(/Will\s|Reflex\s|Fortitude\s/) + " (Caster's Choice)";
+            if (!effect.SavingThrow.match(/none/) && !savingThrow.match(effect.SavingThrow.match(/Will\s|Reflex\s|Fortitude\s/))) {
+              savingThrow += "OR " + effect.SavingThrow.match(/Will\s|Reflex\s|Fortitude\s/);
             }
           }
           //
@@ -376,6 +395,9 @@ var WordConstructor = function (_React$Component) {
           descriptions.push(effect.Description + (effect.Boosts == "null" ? "" : effect.Boosts));
         }
       });
+      if (savingThrow.match(/OR/)) {
+        savingThrow += " (Caster's Choice)";
+      }
       level = level < getCombinedEffectLevel() ? getCombinedEffectLevel() : level;
 
       //School : A combination of all schools found in effect words
