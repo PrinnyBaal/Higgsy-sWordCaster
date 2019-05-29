@@ -48,7 +48,9 @@ function EffectWord(props){
               {forgeEffectOutgroups(effectValues, "level")}
             </select><br/>
             <select value={props.effectStats.meta} onChange={props.onMetaChange}>
-              {metaOptions}
+              <outgroup label="testMyDude">
+                {metaOptions}
+              </outgroup>
             </select><br/>
             <button onClick={props.onClick}>X</button>
         </div>);

@@ -84,7 +84,11 @@ function EffectWord(props) {
       React.createElement(
         "select",
         { value: props.effectStats.meta, onChange: props.onMetaChange },
-        metaOptions
+        React.createElement(
+          "outgroup",
+          { label: "testMyDude" },
+          metaOptions
+        )
       ),
       React.createElement("br", null),
       React.createElement(
