@@ -123,7 +123,8 @@ let twoEffectTable={
     },
   8:{
     5:9
-    }
+  },
+  9:{}
 };
 let threeEffectTable={
   0:{
@@ -203,7 +204,9 @@ let threeEffectTable={
     5:{
       5:9
       },
-    }
+    },
+  8:{},
+  9{}
 };
 
 // if (localStorage.getItem("twoEffectTable") === null) {

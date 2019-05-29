@@ -132,7 +132,7 @@ function EffectWord(props) {
         return twoEffectTable[parseInt(activeEffects[0].effectStats.Levels.match(/\d/))][level] === undefined ? false : true;
         break;
       case 2:
-        return threeEffectTable[parseInt(activeEffects[0].effectStats.Levels.match(/\d/))][parseInt(activeEffects[0].effectStats.Levels.match(/\d/))][level] === undefined ? false : true;
+        return threeEffectTable[parseInt(activeEffects[0].effectStats.Levels.match(/\d/))][parseInt(activeEffects[1].effectStats.Levels.match(/\d/))][level] === undefined ? false : true;
         break;
       default:
         return true;
