@@ -397,8 +397,8 @@ var WordConstructor = function (_React$Component) {
           school += effect.School;
           //
           // activeEffectLevels.push(parseInt(effect.Levels.match(/\d/)));
-          activeEffectLevels.push(builtEffect.setLevel);
-          highestEffectLevel = highestEffectLevel < builtEffect.setLevel ? builtEffect.setLevel : highestEffectLevel;
+          activeEffectLevels.push(builtEffect.effectiveLevel);
+          highestEffectLevel = highestEffectLevel < builtEffect.effectiveLevel ? builtEffect.effectiveLevel : highestEffectLevel;
           // highestEffectLevel= highestEffectLevel<parseInt(effect.Levels.match(/\d/)) ? parseInt(effect.Levels.match(/\d/)):highestEffectLevel;
           //
           var cleanDuration = cleanEffectDuration(effect.Durations);
@@ -411,11 +411,11 @@ var WordConstructor = function (_React$Component) {
             }
           }
           //
-          if (highestEffectLevel < builtEffect.setLevel || savingThrow == "none") {
+          if (highestEffectLevel < builtEffect.effectiveLevel || savingThrow == "none") {
             if (!effect.SavingThrow.match(/none/)) {
               savingThrow = effect.SavingThrow.match(/Will\s|Reflex\s|Fortitude\s/)[0];
             }
-          } else if (highestEffectLevel == builtEffect.setLevel) {
+          } else if (highestEffectLevel == builtEffect.effectiveLevel) {
             if (!effect.SavingThrow.match(/none/) && !savingThrow.includes(effect.SavingThrow.match(/Will\s|Reflex\s|Fortitude\s/))) {
               savingThrow += "OR " + effect.SavingThrow.match(/Will\s|Reflex\s|Fortitude\s/);
             }
