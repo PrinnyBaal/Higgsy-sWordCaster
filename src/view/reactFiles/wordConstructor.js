@@ -320,7 +320,7 @@ class WordConstructor extends React.Component {
         //
         if (highestEffectLevel<effect.Levels.match(/\d/) || savingThrow=="none"){
           if(!effect.SavingThrow.match(/none/)){
-            savingThrow=effect.SavingThrow.match(/Will\s|Reflex\s|Fortitude\s/);
+            savingThrow=effect.SavingThrow.match(/Will\s|Reflex\s|Fortitude\s/)[0];
           }
         }else if(highestEffectLevel==effect.Levels.match(/\d/)){
           if(!effect.SavingThrow.match(/none/) && !savingThrow.includes(effect.SavingThrow.match(/Will\s|Reflex\s|Fortitude\s/))){
