@@ -115,6 +115,24 @@ function EffectWord(props){
     }
   }
 
+  function getEffectWordLevel(effectWord){
+    let presetLevel=false;
+    let activeEffects=[props.builtWord.effectWord1, props.builtWord.effectWord2, props.builtWord.effectWord3];
+    activeEffects.forEach((builtEffect)=>{
+      if (builtEffect.word==effectWord.Title && builtEffect.effectiveLvl){
+        presetLevel=builtEffect.effectiveLvl;
+      }
+    });
+    if (presetLevel){
+      return presetLevel;
+    }
+    else{
+      presetLevel=effectWord.Levels.match(/\d/);
+      props.setLevel(presetLevel);
+      return presetLevel;
+    }
+  }
+
   function forgeEffectOptgroups(values, optgroupType){
     let effectOptgroups=[];
     let finalArray=[];
@@ -184,11 +202,13 @@ class WordConstructor extends React.Component {
     let targetEffect=builtWord[`effectWord${i}`];
     targetEffect.word=newEffect;
     targetEffect.effectStats=JSON.parse(JSON.stringify(this.state.wordLibrary.effects[newEffect]));
-
+    target.effectiveLevel=null;
     //figure out and set new restrictions
 
     this.setState({builtWord:builtWord});
   }
+
+
 
   changeTargetWord(){
     console.log(event);
@@ -197,7 +217,7 @@ class WordConstructor extends React.Component {
     let target=builtWord.targetWord;
 
     target.word=newTarget;
-
+    target.effectiveLevel=null;
     //figure out and set new restrictions
 
     this.setState({builtWord:builtWord});
@@ -209,6 +229,15 @@ class WordConstructor extends React.Component {
     const builtWord= JSON.parse(JSON.stringify(this.state.builtWord));
     let target= i ? builtWord[`effectWord${i}`]:builtWord.targetWord;
     target.meta=newMeta;
+    target.effectiveLevel=null;
+    //figure out and set new restrictions???
+    this.setState({builtWord:builtWord});
+  }
+
+  setLevel(newLvl, i){
+    const builtWord= JSON.parse(JSON.stringify(this.state.builtWord));
+    let target= i ? builtWord[`effectWord${i}`]:builtWord.targetWord;
+    target.effectiveLevel=newLvl;
     //figure out and set new restrictions???
     this.setState({builtWord:builtWord});
   }
@@ -302,14 +331,17 @@ class WordConstructor extends React.Component {
 
         console.log(wordLibrary.effects);
         console.log(effect.word);
+        builtEffect=JSON.parse(JSON.stringify(effect));
         effect=wordLibrary.effects[effect.word];
         console.log(effect);
         spellName+=`--[${effect.Title}]--`;
         //
         school+=effect.School;
         //
-        activeEffectLevels.push(parseInt(effect.Levels.match(/\d/)));
-        highestEffectLevel= highestEffectLevel<parseInt(effect.Levels.match(/\d/)) ? parseInt(effect.Levels.match(/\d/)):highestEffectLevel;
+        // activeEffectLevels.push(parseInt(effect.Levels.match(/\d/)));
+        activeEffectLevels.push(builtEffect.setLevel);
+        highestEffectLevel= highestEffectLevel<builtEffect.setLevel ? builtEffect.setLevel:highestEffectLevel;
+        // highestEffectLevel= highestEffectLevel<parseInt(effect.Levels.match(/\d/)) ? parseInt(effect.Levels.match(/\d/)):highestEffectLevel;
         //
         let cleanDuration=cleanEffectDuration(effect.Durations);
         console.log(cleanDuration);
@@ -321,11 +353,11 @@ class WordConstructor extends React.Component {
           }
         }
         //
-        if (highestEffectLevel<effect.Levels.match(/\d/) || savingThrow=="none"){
+        if (highestEffectLevel<builtEffect.setLevel || savingThrow=="none"){
           if(!effect.SavingThrow.match(/none/)){
             savingThrow=effect.SavingThrow.match(/Will\s|Reflex\s|Fortitude\s/)[0];
           }
-        }else if(highestEffectLevel==effect.Levels.match(/\d/)){
+        }else if(highestEffectLevel==builtEffect.setLevel){
           if(!effect.SavingThrow.match(/none/) && !savingThrow.includes(effect.SavingThrow.match(/Will\s|Reflex\s|Fortitude\s/))){
             savingThrow+=`OR ${effect.SavingThrow.match(/Will\s|Reflex\s|Fortitude\s/)}`;
           }
@@ -389,7 +421,7 @@ class WordConstructor extends React.Component {
   }
 
   renderEffectWord(i){
-    return <EffectWord builtWord={this.state.builtWord} effectStats={this.state.builtWord[`effectWord${i}`]} onClick={() => this.toggleEffectStatus(i)} effectWords={this.state.wordLibrary.effects} metaWords={this.state.wordLibrary.metas} onEffectChange={() => this.changeEffectWord(i)} onMetaChange={() => this.changeMeta(i)}/>
+    return <EffectWord builtWord={this.state.builtWord} effectStats={this.state.builtWord[`effectWord${i}`]} onClick={() => this.toggleEffectStatus(i)} setLevel={(newLvl) => this.setLevel(newLvl, i)} effectWords={this.state.wordLibrary.effects} metaWords={this.state.wordLibrary.metas} onEffectChange={() => this.changeEffectWord(i)} onMetaChange={() => this.changeMeta(i)}/>
   }
 
   render() {

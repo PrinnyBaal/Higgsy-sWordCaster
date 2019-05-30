@@ -162,6 +162,23 @@ function EffectWord(props) {
     }
   }
 
+  function getEffectWordLevel(effectWord) {
+    var presetLevel = false;
+    var activeEffects = [props.builtWord.effectWord1, props.builtWord.effectWord2, props.builtWord.effectWord3];
+    activeEffects.forEach(function (builtEffect) {
+      if (builtEffect.word == effectWord.Title && builtEffect.effectiveLvl) {
+        presetLevel = builtEffect.effectiveLvl;
+      }
+    });
+    if (presetLevel) {
+      return presetLevel;
+    } else {
+      presetLevel = effectWord.Levels.match(/\d/);
+      props.setLevel(presetLevel);
+      return presetLevel;
+    }
+  }
+
   function forgeEffectOptgroups(values, optgroupType) {
     var effectOptgroups = [];
     var finalArray = [];
@@ -243,7 +260,7 @@ var WordConstructor = function (_React$Component) {
       var targetEffect = builtWord["effectWord" + i];
       targetEffect.word = newEffect;
       targetEffect.effectStats = JSON.parse(JSON.stringify(this.state.wordLibrary.effects[newEffect]));
-
+      target.effectiveLevel = null;
       //figure out and set new restrictions
 
       this.setState({ builtWord: builtWord });
@@ -257,7 +274,7 @@ var WordConstructor = function (_React$Component) {
       var target = builtWord.targetWord;
 
       target.word = newTarget;
-
+      target.effectiveLevel = null;
       //figure out and set new restrictions
 
       this.setState({ builtWord: builtWord });
@@ -270,6 +287,16 @@ var WordConstructor = function (_React$Component) {
       var builtWord = JSON.parse(JSON.stringify(this.state.builtWord));
       var target = i ? builtWord["effectWord" + i] : builtWord.targetWord;
       target.meta = newMeta;
+      target.effectiveLevel = null;
+      //figure out and set new restrictions???
+      this.setState({ builtWord: builtWord });
+    }
+  }, {
+    key: "setLevel",
+    value: function setLevel(newLvl, i) {
+      var builtWord = JSON.parse(JSON.stringify(this.state.builtWord));
+      var target = i ? builtWord["effectWord" + i] : builtWord.targetWord;
+      target.effectiveLevel = newLvl;
       //figure out and set new restrictions???
       this.setState({ builtWord: builtWord });
     }
@@ -362,14 +389,17 @@ var WordConstructor = function (_React$Component) {
 
           console.log(wordLibrary.effects);
           console.log(effect.word);
+          builtEffect = JSON.parse(JSON.stringify(effect));
           effect = wordLibrary.effects[effect.word];
           console.log(effect);
           spellName += "--[" + effect.Title + "]--";
           //
           school += effect.School;
           //
-          activeEffectLevels.push(parseInt(effect.Levels.match(/\d/)));
-          highestEffectLevel = highestEffectLevel < parseInt(effect.Levels.match(/\d/)) ? parseInt(effect.Levels.match(/\d/)) : highestEffectLevel;
+          // activeEffectLevels.push(parseInt(effect.Levels.match(/\d/)));
+          activeEffectLevels.push(builtEffect.setLevel);
+          highestEffectLevel = highestEffectLevel < builtEffect.setLevel ? builtEffect.setLevel : highestEffectLevel;
+          // highestEffectLevel= highestEffectLevel<parseInt(effect.Levels.match(/\d/)) ? parseInt(effect.Levels.match(/\d/)):highestEffectLevel;
           //
           var cleanDuration = cleanEffectDuration(effect.Durations);
           console.log(cleanDuration);
@@ -381,11 +411,11 @@ var WordConstructor = function (_React$Component) {
             }
           }
           //
-          if (highestEffectLevel < effect.Levels.match(/\d/) || savingThrow == "none") {
+          if (highestEffectLevel < builtEffect.setLevel || savingThrow == "none") {
             if (!effect.SavingThrow.match(/none/)) {
               savingThrow = effect.SavingThrow.match(/Will\s|Reflex\s|Fortitude\s/)[0];
             }
-          } else if (highestEffectLevel == effect.Levels.match(/\d/)) {
+          } else if (highestEffectLevel == builtEffect.setLevel) {
             if (!effect.SavingThrow.match(/none/) && !savingThrow.includes(effect.SavingThrow.match(/Will\s|Reflex\s|Fortitude\s/))) {
               savingThrow += "OR " + effect.SavingThrow.match(/Will\s|Reflex\s|Fortitude\s/);
             }
@@ -580,6 +610,8 @@ var WordConstructor = function (_React$Component) {
 
       return React.createElement(EffectWord, { builtWord: this.state.builtWord, effectStats: this.state.builtWord["effectWord" + i], onClick: function onClick() {
           return _this3.toggleEffectStatus(i);
+        }, setLevel: function setLevel(newLvl) {
+          return _this3.setLevel(newLvl, i);
         }, effectWords: this.state.wordLibrary.effects, metaWords: this.state.wordLibrary.metas, onEffectChange: function onEffectChange() {
           return _this3.changeEffectWord(i);
         }, onMetaChange: function onMetaChange() {
