@@ -132,11 +132,14 @@ function EffectWord(props) {
         if (testedEffect.WordGroup != "Detection") {
           invalidGroup = true;
         }
-      } else if (effect.effectStats.WordGroup == testedEffect.WordGroup) {
+      } else if (effect.effectStats.WordGroup == testedEffect.WordGroup || testedEffect.WordGroup == "Detection") {
         invalidGroup = true;
       }
     });
-
+    //test for restriction validity
+    if (testedEffect.TargetRestrictions && testedEffect.TargetRestrictions.toUpperCase().includes(props.builtWord.targetWord.word.toUpperCase())) {
+      return false;
+    }
     //test for name validity
     if (invalidName) {
       return false;
