@@ -68,7 +68,7 @@ function EffectWord(props){
     let invalidGroup=false;
     activeEffects=activeEffects.filter((word)=>{
       if(word.active && word.word){
-        if (word.word==props.effectStats.effectStats.Title){
+        if (props.effectStats && word.word==props.effectStats.effectStats.Title){
           return false;
         }else{
           return true;
