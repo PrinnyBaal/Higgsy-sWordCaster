@@ -202,7 +202,7 @@ class WordConstructor extends React.Component {
     let targetEffect=builtWord[`effectWord${i}`];
     targetEffect.word=newEffect;
     targetEffect.effectStats=JSON.parse(JSON.stringify(this.state.wordLibrary.effects[newEffect]));
-    target.effectiveLevel=null;
+    targetEffect.effectiveLevel=null;
     //figure out and set new restrictions
 
     this.setState({builtWord:builtWord});
