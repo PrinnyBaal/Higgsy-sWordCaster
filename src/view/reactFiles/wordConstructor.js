@@ -79,7 +79,6 @@ function EffectWord(props){
     });
     let wordSize=activeEffects.length;
 
-
     activeEffects.forEach((effect)=>{
       if (effect.word==testedEffect.Title){
         invalidName=true;

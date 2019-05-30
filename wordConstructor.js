@@ -113,7 +113,7 @@ function EffectWord(props) {
     var invalidGroup = false;
     activeEffects = activeEffects.filter(function (word) {
       if (word.active && word.word) {
-        if (word.word == props.effectStats.Title) {
+        if (word.word == props.effectStats.effectStats.Title) {
           return false;
         } else {
           return true;
