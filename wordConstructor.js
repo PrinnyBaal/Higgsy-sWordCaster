@@ -113,7 +113,7 @@ function EffectWord(props) {
     var invalidGroup = false;
     activeEffects = activeEffects.filter(function (word) {
       if (word.active && word.word) {
-        if (word.word == props.effectStats.word) {
+        if (word.word == props.effectStats.Title) {
           return false;
         } else {
           return true;
@@ -128,7 +128,7 @@ function EffectWord(props) {
       if (effect.word == testedEffect.Title) {
         invalidName = true;
       }
-      if (effectStats.WordGroup == "Detection") {
+      if (effect.effectStats.WordGroup == "Detection") {
         if (testedEffect.WordGroup != "Detection") {
           invalidGroup = true;
         }
@@ -283,7 +283,7 @@ var WordConstructor = function (_React$Component) {
       var effect3 = builtWord.effectWord3;
       var effectList = [effect1, effect2, effect3];
 
-      var spellName = target.Title;
+      var spellName = "[" + target.Title + "]";
       var school = "";
       var level = target.Level;
       var castingTime = "Standard Action";
