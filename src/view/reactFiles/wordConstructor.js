@@ -261,7 +261,7 @@ class WordConstructor extends React.Component {
     }
     else{
       presetLevel=effectWord.Levels.match(/\d/);
-      this.state.setLevel(presetLevel);
+      this.setLevel(presetLevel);
       return presetLevel;
     }
   }
