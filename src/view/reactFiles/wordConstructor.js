@@ -40,6 +40,7 @@ function EffectWord(props){
   let metaOptions=[];
   let metaValues=Object.values(props.metaWords);
   metaValues.forEach((value)=>{metaOptions.push(<option value={value.Title}>{value.Title}</option>)});
+  getEffectWordLevel(props.effectStats.effectStats);
 
   if (props.effectStats.active){
     return(<div class="wordSlot">
@@ -339,8 +340,8 @@ class WordConstructor extends React.Component {
         school+=effect.School;
         //
         // activeEffectLevels.push(parseInt(effect.Levels.match(/\d/)));
-        activeEffectLevels.push(getEffectWordLevel(builtEffect.effectStats));
-        highestEffectLevel= highestEffectLevel<getEffectWordLevel(builtEffect.effectStats) ? getEffectWordLevel(builtEffect.effectStats):highestEffectLevel;
+        activeEffectLevels.push(builtWord.effectiveLevel);
+        highestEffectLevel= highestEffectLevel<builtWord.effectiveLevel ? builtWord.effectiveLevel:highestEffectLevel;
         // highestEffectLevel= highestEffectLevel<parseInt(effect.Levels.match(/\d/)) ? parseInt(effect.Levels.match(/\d/)):highestEffectLevel;
         //
         let cleanDuration=cleanEffectDuration(effect.Durations);
