@@ -129,12 +129,21 @@ function EffectWord(props) {
       if (effect.word == testedEffect.Title) {
         invalidName = true;
       }
-      if (effect.effectStats.WordGroup == "Detection") {
-        if (testedEffect.WordGroup != "Detection") {
+      // if (effect.effectStats.WordGroup=="Detection"){
+      //   if(testedEffect.WordGroup!="Detection"){
+      //     invalidGroup=true;
+      //   }
+      // }else if(effect.effectStats.WordGroup==testedEffect.WordGroup || testedEffect.WordGroup=="Detection"){
+      //   invalidGroup=true;
+      // }
+      if (testedEffect.WordGroup == "Detection") {
+        if (effect.effectStats.WordGroup != "Detection") {
           invalidGroup = true;
         }
-      } else if (effect.effectStats.WordGroup == testedEffect.WordGroup || testedEffect.WordGroup == "Detection") {
-        invalidGroup = true;
+      } else {
+        if (effect.effectStats.WordGroup == testedEffect.WordGroup) {
+          invalidGroup = true;
+        }
       }
     });
     //test for restriction validity
