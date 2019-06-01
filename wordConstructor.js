@@ -397,8 +397,8 @@ var WordConstructor = function (_React$Component) {
           school += effect.School;
           //
           // activeEffectLevels.push(parseInt(effect.Levels.match(/\d/)));
-          activeEffectLevels.push(builtEffect.effectiveLevel);
-          highestEffectLevel = highestEffectLevel < builtEffect.effectiveLevel ? builtEffect.effectiveLevel : highestEffectLevel;
+          activeEffectLevels.push(getEffectWordLevel(builtEffect.effectStats));
+          highestEffectLevel = highestEffectLevel < getEffectWordLevel(builtEffect.effectStats) ? getEffectWordLevel(builtEffect.effectStats) : highestEffectLevel;
           // highestEffectLevel= highestEffectLevel<parseInt(effect.Levels.match(/\d/)) ? parseInt(effect.Levels.match(/\d/)):highestEffectLevel;
           //
           var cleanDuration = cleanEffectDuration(effect.Durations);
