@@ -98,7 +98,7 @@ function EffectWord(props){
         }
       }
       else{
-        if (effect.effectStats.WordGroup==testedEffect.WordGroup){
+        if (effect.effectStats.WordGroup==testedEffect.WordGroup || effect.effectStats.WordGroup=="Detection"){
           invalidGroup=true;
         }
       }
