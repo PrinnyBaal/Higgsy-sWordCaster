@@ -107,7 +107,8 @@ function EffectWord(props) {
 
   function testEffectValidity(testedEffect) {
     //should test for both level validity and group validity, currrently only doing the former
-    var level = parseInt(testedEffect.Levels.match(/\d/));
+    // let level=parseInt(testedEffect.Levels.match(/\d/));
+    var level = getEffectWordLevel(testedEffect);
     var activeEffects = [props.builtWord.effectWord1, props.builtWord.effectWord2, props.builtWord.effectWord3];
     var invalidName = false;
     var invalidGroup = false;
@@ -403,7 +404,7 @@ var WordConstructor = function (_React$Component) {
             effectiveLevel = twoEffectTable[activeEffectLevels[0]][activeEffectLevels[1]];
             break;
           case 3:
-            effectiveLevel = twoEffectTable[activeEffectLevels[0]][activeEffectLevels[1]][activeEffectLevels[2]];
+            effectiveLevel = threeEffectTable[activeEffectLevels[0]][activeEffectLevels[1]][activeEffectLevels[2]];
             break;
           default:
             console.log("Wait whaat?  You're supposed to have 1-3 effect words not " + activeEffectLevels.length);
@@ -442,7 +443,7 @@ var WordConstructor = function (_React$Component) {
           }
           //
           if (highestEffectLevel < builtEffect.effectiveLevel || savingThrow == "none") {
-            if (!effect.SavingThrow.match(/none/)) {
+            if (!effect.SavingThrow.match(/none/) && effect.SavingThrow.match(/Will\s|Reflex\s|Fortitude\s/).length) {
               savingThrow = effect.SavingThrow.match(/Will\s|Reflex\s|Fortitude\s/)[0];
             }
           } else if (highestEffectLevel == builtEffect.effectiveLevel) {
