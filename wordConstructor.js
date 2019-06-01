@@ -70,7 +70,6 @@ function EffectWord(props) {
       value.Title
     ));
   });
-  getEffectWordLevel(props.effectStats.effectStats);
 
   if (props.effectStats.active) {
     return React.createElement(
@@ -163,25 +162,23 @@ function EffectWord(props) {
     }
   }
 
-  function getEffectWordLevel(effectWord) {
-    if (!effectWord) {
-      return;
-    }
-    var presetLevel = false;
-    var activeEffects = [props.builtWord.effectWord1, props.builtWord.effectWord2, props.builtWord.effectWord3];
-    activeEffects.forEach(function (builtEffect) {
-      if (builtEffect.word == effectWord.Title && builtEffect.effectiveLvl) {
-        presetLevel = builtEffect.effectiveLvl;
-      }
-    });
-    if (presetLevel) {
-      return presetLevel;
-    } else {
-      presetLevel = effectWord.Levels.match(/\d/);
-      props.setLevel(presetLevel);
-      return presetLevel;
-    }
-  }
+  // function getEffectWordLevel(effectWord){
+  //   let presetLevel=false;
+  //   let activeEffects=[props.builtWord.effectWord1, props.builtWord.effectWord2, props.builtWord.effectWord3];
+  //   activeEffects.forEach((builtEffect)=>{
+  //     if (builtEffect.word==effectWord.Title && builtEffect.effectiveLvl){
+  //       presetLevel=builtEffect.effectiveLvl;
+  //     }
+  //   });
+  //   if (presetLevel){
+  //     return presetLevel;
+  //   }
+  //   else{
+  //     presetLevel=effectWord.Levels.match(/\d/);
+  //     props.setLevel(presetLevel);
+  //     return presetLevel;
+  //   }
+  // }
 
   function forgeEffectOptgroups(values, optgroupType) {
     var effectOptgroups = [];
@@ -268,6 +265,7 @@ var WordConstructor = function (_React$Component) {
       //figure out and set new restrictions
 
       this.setState({ builtWord: builtWord });
+      this.getEffectWordLevel(targetEffect.effectStats);
     }
   }, {
     key: "changeTargetWord",
@@ -294,6 +292,7 @@ var WordConstructor = function (_React$Component) {
       target.effectiveLevel = null;
       //figure out and set new restrictions???
       this.setState({ builtWord: builtWord });
+      this.getEffectWordLevel(target.effectStats);
     }
   }, {
     key: "setLevel",
@@ -303,6 +302,27 @@ var WordConstructor = function (_React$Component) {
       target.effectiveLevel = newLvl;
       //figure out and set new restrictions???
       this.setState({ builtWord: builtWord });
+    }
+  }, {
+    key: "getEffectWordLevel",
+    value: function getEffectWordLevel(effectWord) {
+      if (!effectWord) {
+        return;
+      }
+      var presetLevel = false;
+      var activeEffects = [this.state.builtWord.effectWord1, this.state.builtWord.effectWord2, this.state.builtWord.effectWord3];
+      activeEffects.forEach(function (builtEffect) {
+        if (builtEffect.word == effectWord.Title && builtEffect.effectiveLvl) {
+          presetLevel = builtEffect.effectiveLvl;
+        }
+      });
+      if (presetLevel) {
+        return presetLevel;
+      } else {
+        presetLevel = effectWord.Levels.match(/\d/);
+        this.state.setLevel(presetLevel);
+        return presetLevel;
+      }
     }
   }, {
     key: "renderContent",
