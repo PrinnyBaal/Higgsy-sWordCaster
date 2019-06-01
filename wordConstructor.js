@@ -256,6 +256,8 @@ var WordConstructor = function (_React$Component) {
   }, {
     key: "changeEffectWord",
     value: function changeEffectWord(i) {
+      var _this2 = this;
+
       var newEffect = event.target.value;
       var builtWord = JSON.parse(JSON.stringify(this.state.builtWord));
       var targetEffect = builtWord["effectWord" + i];
@@ -264,7 +266,9 @@ var WordConstructor = function (_React$Component) {
       targetEffect.effectiveLevel = null;
       //figure out and set new restrictions
 
-      this.setState({ builtWord: builtWord }, this.getEffectWordLevel(targetEffect.effectStats));
+      this.setState({ builtWord: builtWord }, function () {
+        _this2.getEffectWordLevel(targetEffect.effectStats);
+      });
     }
   }, {
     key: "changeTargetWord",
@@ -283,6 +287,8 @@ var WordConstructor = function (_React$Component) {
   }, {
     key: "changeMeta",
     value: function changeMeta(i) {
+      var _this3 = this;
+
       console.log(event);
       var newMeta = event.target.value;
       var builtWord = JSON.parse(JSON.stringify(this.state.builtWord));
@@ -290,7 +296,9 @@ var WordConstructor = function (_React$Component) {
       target.meta = newMeta;
       target.effectiveLevel = null;
       //figure out and set new restrictions???
-      this.setState({ builtWord: builtWord }, this.getEffectWordLevel(target.effectStats));
+      this.setState({ builtWord: builtWord }, function () {
+        _this3.getEffectWordLevel(targetEffect.effectStats);
+      });
     }
   }, {
     key: "setLevel",
@@ -618,27 +626,27 @@ var WordConstructor = function (_React$Component) {
   }, {
     key: "renderTargetWord",
     value: function renderTargetWord() {
-      var _this2 = this;
+      var _this4 = this;
 
       return React.createElement(TargetWord, { targetStats: this.state.builtWord.targetWord, targetWords: this.state.wordLibrary.targets, metaWords: this.state.wordLibrary.metas, onTargetChange: function onTargetChange() {
-          return _this2.changeTargetWord();
+          return _this4.changeTargetWord();
         }, onMetaChange: function onMetaChange() {
-          return _this2.changeMeta();
+          return _this4.changeMeta();
         } });
     }
   }, {
     key: "renderEffectWord",
     value: function renderEffectWord(i) {
-      var _this3 = this;
+      var _this5 = this;
 
       return React.createElement(EffectWord, { builtWord: this.state.builtWord, effectStats: this.state.builtWord["effectWord" + i], onClick: function onClick() {
-          return _this3.toggleEffectStatus(i);
+          return _this5.toggleEffectStatus(i);
         }, setLevel: function setLevel(newLvl) {
-          return _this3.setLevel(newLvl, i);
+          return _this5.setLevel(newLvl, i);
         }, effectWords: this.state.wordLibrary.effects, metaWords: this.state.wordLibrary.metas, onEffectChange: function onEffectChange() {
-          return _this3.changeEffectWord(i);
+          return _this5.changeEffectWord(i);
         }, onMetaChange: function onMetaChange() {
-          return _this3.changeMeta(i);
+          return _this5.changeMeta(i);
         } });
     }
   }, {
