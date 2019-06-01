@@ -164,6 +164,9 @@ function EffectWord(props) {
   }
 
   function getEffectWordLevel(effectWord) {
+    if (!effectWord) {
+      return;
+    }
     var presetLevel = false;
     var activeEffects = [props.builtWord.effectWord1, props.builtWord.effectWord2, props.builtWord.effectWord3];
     activeEffects.forEach(function (builtEffect) {
