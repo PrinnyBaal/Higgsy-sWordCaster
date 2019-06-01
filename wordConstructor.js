@@ -264,8 +264,7 @@ var WordConstructor = function (_React$Component) {
       targetEffect.effectiveLevel = null;
       //figure out and set new restrictions
 
-      this.setState({ builtWord: builtWord });
-      this.getEffectWordLevel(targetEffect.effectStats);
+      this.setState({ builtWord: builtWord }, this.getEffectWordLevel(targetEffect.effectStats));
     }
   }, {
     key: "changeTargetWord",
@@ -291,8 +290,7 @@ var WordConstructor = function (_React$Component) {
       target.meta = newMeta;
       target.effectiveLevel = null;
       //figure out and set new restrictions???
-      this.setState({ builtWord: builtWord });
-      this.getEffectWordLevel(target.effectStats);
+      this.setState({ builtWord: builtWord }, this.getEffectWordLevel(target.effectStats));
     }
   }, {
     key: "setLevel",
