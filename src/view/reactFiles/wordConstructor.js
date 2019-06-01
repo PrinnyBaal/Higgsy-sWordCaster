@@ -116,23 +116,22 @@ function EffectWord(props){
     }
   }
 
-  // function getEffectWordLevel(effectWord){
-  //   let presetLevel=false;
-  //   let activeEffects=[props.builtWord.effectWord1, props.builtWord.effectWord2, props.builtWord.effectWord3];
-  //   activeEffects.forEach((builtEffect)=>{
-  //     if (builtEffect.word==effectWord.Title && builtEffect.effectiveLvl){
-  //       presetLevel=builtEffect.effectiveLvl;
-  //     }
-  //   });
-  //   if (presetLevel){
-  //     return presetLevel;
-  //   }
-  //   else{
-  //     presetLevel=effectWord.Levels.match(/\d/);
-  //     props.setLevel(presetLevel);
-  //     return presetLevel;
-  //   }
-  // }
+  function getEffectWordLevel(effectWord){
+    let presetLevel=false;
+    let activeEffects=[props.builtWord.effectWord1, props.builtWord.effectWord2, props.builtWord.effectWord3];
+    activeEffects.forEach((builtEffect)=>{
+      if (builtEffect.word==effectWord.Title && builtEffect.effectiveLvl){
+        presetLevel=builtEffect.effectiveLvl;
+      }
+    });
+    if (presetLevel){
+      return presetLevel;
+    }
+    else{
+      presetLevel=effectWord.Levels.match(/\d/);
+      return presetLevel;
+    }
+  }
 
   function forgeEffectOptgroups(values, optgroupType){
     let effectOptgroups=[];
@@ -364,8 +363,9 @@ class WordConstructor extends React.Component {
         school+=effect.School;
         //
         // activeEffectLevels.push(parseInt(effect.Levels.match(/\d/)));
-        activeEffectLevels.push(builtWord.effectiveLevel);
-        highestEffectLevel= highestEffectLevel<builtWord.effectiveLevel ? builtWord.effectiveLevel:highestEffectLevel;
+        let currentEffectLvl=builtEffect.effectiveLevel? builtEffect.effectiveLevel:parseInt(effect.Levels.match(/\d/));
+        activeEffectLevels.push(currentEffectLvl);
+        highestEffectLevel= highestEffectLevel<currentEffectLvl ? currentEffectLvl:highestEffectLevel;
         // highestEffectLevel= highestEffectLevel<parseInt(effect.Levels.match(/\d/)) ? parseInt(effect.Levels.match(/\d/)):highestEffectLevel;
         //
         let cleanDuration=cleanEffectDuration(effect.Durations);
