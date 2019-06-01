@@ -260,7 +260,8 @@ class WordConstructor extends React.Component {
       return presetLevel;
     }
     else{
-      presetLevel=effectWord.Levels.match(/\d/);
+      presetLevel=parseInt(effectWord.Levels.match(/\d/));
+      console.log(presetLevel);
       this.setLevel(presetLevel);
       return presetLevel;
     }

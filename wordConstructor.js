@@ -319,7 +319,8 @@ var WordConstructor = function (_React$Component) {
       if (presetLevel) {
         return presetLevel;
       } else {
-        presetLevel = effectWord.Levels.match(/\d/);
+        presetLevel = parseInt(effectWord.Levels.match(/\d/));
+        console.log(presetLevel);
         this.setLevel(presetLevel);
         return presetLevel;
       }
